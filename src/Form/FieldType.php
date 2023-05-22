@@ -16,8 +16,6 @@ class FieldType extends AbstractType
             ->add('content')
             ->add('type')
             ->add('project')
-            ->add('file')
-            ->add('link')
         ;
     }
 

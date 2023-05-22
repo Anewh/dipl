@@ -1,39 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Project index{% endblock %}
+{% block title %}Project index
+{% endblock %}
 
 {% block body %}
-    <h1>Project index</h1>
+	<div class="container-fluid">
+		{% for row in projects|batch(2) %}
+			<div class="row justify-content-between mt-3">
+				{% for project in row %}
+					<div class="col-md-6">
+						<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+							<div class="col p-4 d-flex flex-column position-static">
+								<h3 class="mb-0">{{ project.fullname }}</h3>
+								<div class="mb-1 text-muted">
+									текст</div>
+								<p class="card-text mb-auto" style="font-size:14px;">{{ project.codeName }}</p>
+								<div class"row justify-content-between mt-2">
+									<div class="btn-group" style="margin-top:10px;">
+										<a href="{{ path('app_project_show', {'id': project.id}) }}" class="btn btn-sm btn-outline-secondary">Подробнее</a>
+										{% if (is_granted('ROLE_LIBRARIAN')) and upd is defined %}
+											{% if  upd[project.id] == 'true' %}
+												<a href="{{ path('app_project_edit', {'id': project.id}) }}" class="btn btn-sm btn-outline-secondary">Изменить</a>
+											{% endif %}
+										{% endif %}
+										{% if is_granted('ROLE_ADMIN') %}
+											<a href="{{ path('app_project_edit', {'id': project.id}) }}" class="btn btn-sm btn-outline-secondary">Изменить</a>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+							<div class="col-auto d-none d-lg-block">
+								<a href="{{ path('app_project_show', {'id': project.id}) }}">
+									<svg class="bd-placeholder-img" style="justify-contect:center;" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveaspectratio="xMidYMid slice" focusable="false">
+										<title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="35%" y="25%" fill="#eceeef" dy=".3em"></text>
+									</svg>
+								</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			{% endfor %}
+		</tbody>
+	</table>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>FullName</th>
-                <th>CodeName</th>
-                <th>Type</th>
-                <th >actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for project in projects %}
-            <tr>
-                <td>{{ project.id }}</td>
-                <td>{{ project.fullName }}</td>
-                <td>{{ project.codeName }}</td>
-                <td>{{ project.type }}</td>
-                <td>
-                    <a href="{{ path('app_project_show', {'id': project.id}) }}">show</a>
-                    <a href="{{ path('app_project_edit', {'id': project.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_project_new') }}">Create new</a>
+	<a href="{{ path('app_project_new') }}">Create new</a>
 {% endblock %}

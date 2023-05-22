@@ -2,9 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Field;
+use App\Entity\Page;
 use App\Entity\Project;
+use App\Entity\Team;
+use App\Entity\User;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,10 +46,12 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_project_show', methods: ['GET'])]
-    public function show(Project $project): Response
+    public function show(Project $project, ManagerRegistry $doctrine): Response
     {
+        $entityManager = $doctrine->getManager();
+        
         return $this->render('project/show.html.twig', [
-            'project' => $project,
+            'project' => $project
         ]);
     }
 
