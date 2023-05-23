@@ -6,151 +6,104 @@
 {% block body %}
 
 	<main class="container-fluid py-3">
-
-
 		<div class="row">
 			<div class="col-sm-2">
 				<aside class="bd-aside sticky-xl-top text-body-secondary align-self-start mb-3 mb-xl-5 px-2">
 					<h2 class="h6 pb-3 mb-1 border-bottom">Команды</h2>
 					<nav class="small" id="toc">
-                    {% for team in project.teams %}
-						<ul class="list-group">
-							<li class="list-group-item d-flex justify-content-between align-items-center">
-								<a href="{{ path('app_project_index') }}" class="list-group-item-action text-decoration-none">{{ team.name }}</a>
-								<span class="badge bg-primary rounded-pill">{{ team.users.count}}</span>
-							</li>
-						</ul>
-                    {% endfor %}
+						{% for team in project.teams %}
+							<ul class="list-group">
+								<li class="list-group-item d-flex justify-content-between align-items-center">
+									<a href="{{ path('app_project_index') }}" class="list-group-item-action text-decoration-none">{{ team.name }}</a>
+									<span class="badge bg-primary rounded-pill">{{ team.users.count}}</span>
+								</li>
+							</ul>
+						{% endfor %}
 					</nav>
 				</aside>
-                <aside class="bd-aside sticky-xl-top text-body-secondary align-self-start mb-3 mb-xl-5 px-2">
+				<aside class="bd-aside sticky-xl-top text-body-secondary align-self-start mb-3 mb-xl-5 px-2">
 					<h2 class="h6 pb-3 mb-1 border-bottom">Пользователи</h2>
 					<nav class="small" id="toc">
-                    {% for user in project.users %}
-						<ul class="list-group">
-							<li class="list-group-item d-flex justify-content-between align-items-center">
-								<a href="{{ path('app_project_index') }}" class="list-group-item-action text-decoration-none">{{ user.firstname ~ ' ' ~ user.lastname}}</a>
-								<span class="badge bg-primary rounded-pill">{{ user.roles[0]}}</span>
-							</li>
-						</ul>
-                    {% endfor %}
+						{% for user in project.users %}
+							<ul class="list-group">
+								<li class="list-group-item d-flex justify-content-between align-items-center">
+									<a href="{{ path('app_project_index') }}" class="list-group-item-action text-decoration-none">{{ user.firstname ~ ' ' ~ user.lastname}}</a>
+									<span class="badge bg-primary rounded-pill">{{ user.roles[0]}}</span>
+								</li>
+							</ul>
+						{% endfor %}
 					</nav>
 				</aside>
-
 			</div>
-
-
-			<div
-				class="col-sm-8">
-
-
-				{# <hr class="my-5"> #}
-				<div class="row" data-masonry="{&quot;percentPosition&quot;: true }" style="position: relative; height: 690px;">
-					<div class="col-sm-6 col-lg-4 mb-4" style="position: absolute; left: 0%; top: 0px;">
-						<div class="card">
-							<svg class="bd-placeholder-img card-img-top" width="100%" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveaspectratio="xMidYMid slice" focusable="false">
-								<title>Placeholder</title>
-								<rect width="100%" height="100%" fill="#868e96"></rect>
-								<text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-							</svg>
-							<div class="card-body">
-								<h5 class="card-title">Card title that wraps to a new line</h5>
-								<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-							</div>
-						</div>
+			<div class="col-sm-8">
+				{% for row in project.fields|batch(3) %}
+					<div
+						class="row" data-masonry="{&quot;percentPosition&quot;: true }" style="position: relative; height: 690px;">
+						{% for field in row %}
+								{% if field.type == 'file' %}
+									<div class="col-sm-6 col-lg-4 mb-4"> <div class="card p-3">
+										<figure class="p-3 mb-0">
+											<blockquote class="blockquote">
+												<p>Это пример поля для файла</p>
+											</blockquote>
+											<figcaption class="blockquote-footer mb-0 text-body-secondary">
+												и его краткого описания
+												<cite title="Source Title">
+													а тут ссылка на скачивание
+												</cite>
+											</figcaption>
+										</figure>
+									</div>
+								</div>
+							{% elseif field.type == 'img' %}
+								<div class="col-sm-6 col-lg-4 mb-4">
+									<div class="card">
+										<svg class="bd-placeholder-img card-img-top" width="100%" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveaspectratio="xMidYMid slice" focusable="false">
+											<title>Placeholder</title>
+											<rect width="100%" height="100%" fill="#868e96"></rect>
+											<text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+										</svg>
+										<div class="card-body">
+											<h5 class="card-title">Это пример поля с типом "img"</h5>
+											<p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+											<p class="card-text">
+												<small class="text-body-secondary">Last updated 3 mins ago</small>
+											</p>
+										</div>
+									</div>
+								</div>
+							{% elseif field.type == 'link' %}
+								<div class="col-sm-6 col-lg-4 mb-4">
+									<div class="card text-center">
+										<div class="card-body">
+											<h5 class="card-title">Поле типа "link"</h5>
+											<p class="card-text">Ну и описание ссылки</p>
+											<p class="card-text">
+												<small class="text-body-secondary">
+													сама ссылка
+												</small>
+											</p>
+										</div>
+									</div>
+								</div>
+							{% elseif field.type == 'text' %}
+								<div class="col-sm-6 col-lg-4 mb-4">
+									<div class="card">
+										<div class="card-body">
+											<h5 class="card-title">А тут типа длинный текст</h5>
+											<p class="card-text">Ну что-то вроде... This is another card with title and supporting text below. This card has some additional content to make it slightly taller overall.</p>
+											<p class="card-text">
+												<small class="text-body-secondary"></small>
+											</p>
+										</div>
+									</div>
+								</div>
+							{% endif %}
+						{% endfor %}
 					</div>
-					<div class="col-sm-6 col-lg-4 mb-4" style="position: absolute; left: 33.3333%; top: 0px;">
-						<div class="card p-3">
-							<figure class="p-3 mb-0">
-								<blockquote class="blockquote">
-									<p>A well-known quote, contained in a blockquote element.</p>
-								</blockquote>
-								<figcaption class="blockquote-footer mb-0 text-body-secondary">
-									Someone famous in
-									<cite title="Source Title">Source Title</cite>
-								</figcaption>
-							</figure>
-						</div>
-					</div>
-					<div class="col-sm-6 col-lg-4 mb-4" style="position: absolute; left: 33.3333%; top: 171px;">
-						<div class="card text-bg-primary text-center p-3">
-							<figure class="mb-0">
-								<blockquote class="blockquote">
-									<p>A well-known quote, contained in a blockquote element.</p>
-								</blockquote>
-								<figcaption class="blockquote-footer mb-0 text-white">
-									Someone famous in
-									<cite title="Source Title">Source Title</cite>
-								</figcaption>
-							</figure>
-						</div>
-					</div>
-
-					<div class="col-sm-6 col-lg-4 mb-4" style="position: absolute; left: 66.6667%; top: 0px;">
-						<div class="card">
-							<svg class="bd-placeholder-img card-img-top" width="100%" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveaspectratio="xMidYMid slice" focusable="false">
-								<title>Placeholder</title>
-								<rect width="100%" height="100%" fill="#868e96"></rect>
-								<text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-							</svg>
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-								<p class="card-text">
-									<small class="text-body-secondary">Last updated 3 mins ago</small>
-								</p>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6 col-lg-4 mb-4" style="position: absolute; left: 33.3333%; top: 310px;">
-						<div class="card text-center">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">This card has a regular title and short paragraph of text below it.</p>
-								<p class="card-text">
-									<small class="text-body-secondary">Last updated 3 mins ago</small>
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-6 col-lg-4 mb-4" style="position: absolute; left: 0%; top: 362px;">
-						<div class="card">
-							<svg class="bd-placeholder-img card-img" width="100%" height="260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Card image" preserveaspectratio="xMidYMid slice" focusable="false">
-								<title>Placeholder</title>
-								<rect width="100%" height="100%" fill="#868e96"></rect>
-								<text x="50%" y="50%" fill="#dee2e6" dy=".3em">Card image</text>
-							</svg>
-						</div>
-					</div>
-					<div class="col-sm-6 col-lg-4 mb-4" style="position: absolute; left: 66.6667%; top: 378px;">
-						<div class="card p-3 text-end">
-							<figure class="mb-0">
-								<blockquote class="blockquote">
-									<p>A well-known quote, contained in a blockquote element.</p>
-								</blockquote>
-								<figcaption class="blockquote-footer mb-0 text-body-secondary">
-									Someone famous in
-									<cite title="Source Title">Source Title</cite>
-								</figcaption>
-							</figure>
-						</div>
-					</div>
-					<div class="col-sm-6 col-lg-4 mb-4" style="position: absolute; left: 33.3333%; top: 488px;">
-						<div class="card">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">This is another card with title and supporting text below. This card has some additional content to make it slightly taller overall.</p>
-								<p class="card-text">
-									<small class="text-body-secondary">Last updated 3 mins ago</small>
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
+				{% endfor %}
 			</div>
-			<div
-				class="col-sm-2 mt-2">
+			<div class="col-sm-2 mt-2">
 				<nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4 border-end list-group">
 					<nav class="nav nav-pills flex-column">
 						<a class="nav-link" href="#item-1">Item 1</a>
@@ -174,28 +127,28 @@
 
 
 	{# <h1>Project</h1>
-
-	<table class="table">
-		<tbody>
-			<tr>
-				<th>Id</th>
-				<td>{{ project.id }}</td>
-			</tr>
-			<tr>
-				<th>FullName</th>
-				<td>{{ project.fullName }}</td>
-			</tr>
-			<tr>
-				<th>CodeName</th>
-				<td>{{ project.codeName }}</td>
-			</tr>
-			<tr>
-				<th>Type</th>
-				<td>{{ project.type }}</td>
-			</tr>
-		</tbody>
-	</table>
- #}
+		
+			<table class="table">
+				<tbody>
+					<tr>
+						<th>Id</th>
+						<td>{{ project.id }}</td>
+					</tr>
+					<tr>
+						<th>FullName</th>
+						<td>{{ project.fullName }}</td>
+					</tr>
+					<tr>
+						<th>CodeName</th>
+						<td>{{ project.codeName }}</td>
+					</tr>
+					<tr>
+						<th>Type</th>
+						<td>{{ project.type }}</td>
+					</tr>
+				</tbody>
+			</table>
+		 #}
 	<a href="{{ path('app_project_index') }}">back to list</a>
 
 	<a href="{{ path('app_project_edit', {'id': project.id}) }}">edit</a>

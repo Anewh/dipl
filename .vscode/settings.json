@@ -1,0 +1,13 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "172.20.0.3",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "diplom",
+            "username": "pguser",
+            "database": "diplom"
+        }
+    ]
+}
