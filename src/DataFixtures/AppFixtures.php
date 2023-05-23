@@ -139,10 +139,11 @@ class AppFixtures extends Fixture
             array_push($projects, $project);
         }
 
-        $team1 = (new Team())->addUser($users[0]);
-        $team2 = (new Team())->addUser($users[1])->addUser($users[2]);
+        $team1 = (new Team())->addUser($users[0])->setName('Team 1');
+        $team2 = (new Team())->addUser($users[1])->addUser($users[2])->setName('Team 2');
 
         $projects[0]->addTeam($team1);
+        $projects[0]->addTeam($team2);
         $projects[1]->addTeam($team2);
         $projects[2]->addTeam($team2);
 

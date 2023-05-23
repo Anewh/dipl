@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230520131518 extends AbstractMigration
+final class Version20230523171728 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -40,7 +40,7 @@ final class Version20230520131518 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_B4021E51A76ED395 ON project_user (user_id)');
         $this->addSql('CREATE TABLE storage (id INT NOT NULL, project_id INT DEFAULT NULL, link TEXT NOT NULL, description TEXT DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_547A1B34166D1F9C ON storage (project_id)');
-        $this->addSql('CREATE TABLE team (id INT NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE team (id INT NOT NULL, name VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE "user" (id INT NOT NULL, team_id INT DEFAULT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, phone VARCHAR(255) NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, github_name VARCHAR(255) DEFAULT NULL, token VARCHAR(1024) DEFAULT NULL, position VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649E7927C74 ON "user" (email)');
         $this->addSql('CREATE INDEX IDX_8D93D649296CD8AE ON "user" (team_id)');

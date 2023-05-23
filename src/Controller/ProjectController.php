@@ -2,11 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Field;
-use App\Entity\Page;
 use App\Entity\Project;
-use App\Entity\Team;
-use App\Entity\User;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
 use Doctrine\Persistence\ManagerRegistry;

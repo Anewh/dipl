@@ -41,7 +41,7 @@
 							<a class="nav-link active" aria-current="page" href="{{ path('app_project_index') }}">Проекты</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" {# href="{{ path('app_profile_show') }}" #}">Профиль</a>
+							<a class="nav-link active" aria-current="page" {# href="{{ path('app_profile_show') }}" "#}>Профиль</a>
 						</li>
 						{% endif %}
 						<li class="nav-item">
@@ -89,12 +89,12 @@
 				</div>
 			</nav>
 			</header>
-			<div class="container py-4">
+			
 			{% block body %}
 				<script src="{{ asset('build/app.js') }}" defer></script>
 			{% endblock %}
-			</div>
+			
 		</body>
-		<script src="https://getbootstrap.com/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
 	</body>
 </html>

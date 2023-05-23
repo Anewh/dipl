@@ -22,6 +22,9 @@ class Team
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: User::class)]
     private Collection $users;
 
+    #[ORM\Column(length: 255,  nullable: true)]
+    private ?string $name = null;
+
     public function __construct()
     {
         $this->projects = new ArrayCollection();
@@ -86,6 +89,18 @@ class Team
                 $user->setTeam(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }
