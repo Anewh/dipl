@@ -21,12 +21,15 @@
 	<header class="mb-4 border-bottom">
 		<nav class="navbar navbar-expand-lg bg-body-tertiary">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="{{ path('app_project_index') }}">MyDocs</a>
+				<div class="navbar-brand" href="{{ path('app_project_index') }}">MyDocs</div>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('app_main') }}">На главную</a>
+						</li>
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" href="{{ path('app_team_index') }}">Команды</a>
 						</li>
@@ -43,10 +46,10 @@
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" {# href="{{ path('app_profile_show') }}" "#}>Профиль</a>
 						</li>
-						{% endif %}
 						<li class="nav-item">
-							<a class="nav-link" href="{{ path('app_main') }}">На главную</a>
+							<a class="nav-link disable" href="{{ path('app_main') }}">{{ app.user.email }}</a>
 						</li>
+						{% endif %}
 					</ul>
 					<div class="collapse navbar-collapse d-flex justify-content-end">
 						<ul class="navbar-nav d-flex justify-content-end">
@@ -59,25 +62,25 @@
 							{% if app.user %}
 								<div class="d-flex justify-content-end">
 									<li class="nav-item ml-1" style="margin-right: 10px;">
-										<h4 class="m-md-0">
-											Привет,
+										{# <h6 class="m-md-0">
 											{{ app.user.email }}
-										</h4>
+										</h6> #}
 									</li>
 									<li class="nav-item">
-										<a {# href="{{ path('app_logout') }}" #} class="btn btn-outline-dark ms-2">
+										<a 
+										href="{{ path('app_logout') }}"
+										 class="btn btn-outline-dark ms-2">
 											Выход
 										</a>
 									</li>
 								{% else %}
 									<li class="nav-item ml-1">
-										<a {# href="{{ path('app_register') }}" #} class="btn btn-outline-dark ms-2">
+										<a href="{{ path('app_register') }}" class="btn btn-outline-dark ms-2">
 											Регистрация
 										</a>
 									</li>
-
 									<li class="nav-item ml-1 ms-2">
-										<a {# href="{{ path('app_login') }}" #} class="btn btn btn-dark">
+										<a href="{{ path('app_login') }}" class="btn btn btn-dark">
 											Вход
 										</a>
 									</li>
