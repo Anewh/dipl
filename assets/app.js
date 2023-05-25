@@ -11,8 +11,13 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import 'bootstrap/js/dist/util';
 import 'bootstrap/js/dist/dropdown';
 
+
 // start the Stimulus application
 import './bootstrap';
+import { registerVueControllerComponents } from '@symfony/ux-vue';
+
+registerVueControllerComponents(require.context('./components', true, /\.vue$/));
+
 
 const $ = require('jquery');
 // this "modifies" the jquery module: adding behavior to it

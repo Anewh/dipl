@@ -9,12 +9,21 @@
 		<div class="row">
 			<div class="col-sm-2">
 				<aside class="bd-aside sticky-xl-top text-body-secondary align-self-start mb-3 mb-xl-5 px-2">
+					<div class="list-group-flush mb-3">
+						<a href="#" class="list-group-item list-group-item-action">
+							<div class="d-flex w-100 justify-content-between">
+								<h5 class="mb-1">{{ project.fullName}}</h5>
+							</div>
+							<p class="mb-1">{{ project.CodeName}}</p>
+							<small>{{ project.type}}</small>
+						</a>
+					</div>
 					<h2 class="h6 pb-3 mb-1 border-bottom">Команды</h2>
 					<nav class="small" id="toc">
 						{% for team in project.teams %}
 							<ul class="list-group">
 								<li class="list-group-item d-flex justify-content-between align-items-center">
-									<a href="{{ path('app_project_index') }}" class="list-group-item-action text-decoration-none">{{ team.name }}</a>
+									<a href="{{ path('app_team_show', {'id': team.id}) }}" class="list-group-item-action text-decoration-none">{{ team.name }}</a>
 									<span class="badge bg-primary rounded-pill">{{ team.users.count}}</span>
 								</li>
 							</ul>
@@ -27,7 +36,7 @@
 						{% for user in project.users %}
 							<ul class="list-group">
 								<li class="list-group-item d-flex justify-content-between align-items-center">
-									<a href="{{ path('app_project_index') }}" class="list-group-item-action text-decoration-none">{{ user.firstname ~ ' ' ~ user.lastname}}</a>
+									<a href="{{ path('app_user_show', {'id': user.id}) }}" class="list-group-item-action text-decoration-none">{{ user.firstname ~ ' ' ~ user.lastname}}</a>
 									<span class="badge bg-primary rounded-pill">{{ user.roles[0]}}</span>
 								</li>
 							</ul>
@@ -37,11 +46,11 @@
 			</div>
 			<div class="col-sm-8">
 				{% for row in project.fields|batch(3) %}
-					<div
-						class="row" data-masonry="{&quot;percentPosition&quot;: true }" style="position: relative; height: 690px;">
+					<div class="row" data-masonry="{&quot;percentPosition&quot;: true }" style="position: relative; height: 690px;">
 						{% for field in row %}
-								{% if field.type == 'file' %}
-									<div class="col-sm-6 col-lg-4 mb-4"> <div class="card p-3">
+							{% if field.type == 'file' %}
+								<div class="col-sm-6 col-lg-4 mb-4">
+									<div class="card p-3">
 										<figure class="p-3 mb-0">
 											<blockquote class="blockquote">
 												<p>Это пример поля для файла</p>
@@ -110,45 +119,18 @@
 						<nav class="nav nav-pills flex-column">
 							<a class="nav-link ms-3 my-1" href="#item-1-1">Item 1-1</a>
 							<a class="nav-link ms-3 my-1" href="#item-1-2">Item 1-2</a>
-
 						</nav>
 						<a class="nav-link" href="#item-2">Item 2</a>
 						<a class="nav-link" href="#item-3">Item 3</a>
 						<nav class="nav nav-pills flex-column">
 							<a class="nav-link ms-3 my-1" href="#item-3-1">Item 3-1</a>
 							<a class="nav-link ms-3 my-1" href="#item-3-2">Item 3-2</a>
-
 						</nav>
 					</nav>
 				</nav>
 			</div>
 		</div>
 	</main>
-
-
-	{# <h1>Project</h1>
-		
-			<table class="table">
-				<tbody>
-					<tr>
-						<th>Id</th>
-						<td>{{ project.id }}</td>
-					</tr>
-					<tr>
-						<th>FullName</th>
-						<td>{{ project.fullName }}</td>
-					</tr>
-					<tr>
-						<th>CodeName</th>
-						<td>{{ project.codeName }}</td>
-					</tr>
-					<tr>
-						<th>Type</th>
-						<td>{{ project.type }}</td>
-					</tr>
-				</tbody>
-			</table>
-		 #}
 	<a href="{{ path('app_project_index') }}">back to list</a>
 
 	<a href="{{ path('app_project_edit', {'id': project.id}) }}">edit</a>
