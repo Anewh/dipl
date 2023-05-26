@@ -20,7 +20,7 @@
 					<ol class="list-group list-group-numbered mt-4 mb-2">
 
 						{% for user in team.users %}
-							<a href="{{ path('app_user_show', {'id': user.id}) }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+							<a href="{{ path('app_profile_show', {'id': user.id}) }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
 								<li class=" d-flex justify-content-between align-items-start">
 									<div class="ms-2 me-auto">
 										<div class="fw-bold">{{ user.firstname ~ ' ' ~  user.lastname}}</div>

@@ -44,7 +44,7 @@
 							<a class="nav-link active" aria-current="page" href="{{ path('app_project_index') }}">Проекты</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" {# href="{{ path('app_profile_show') }}" "#}>Профиль</a>
+							<a class="nav-link active" aria-current="page" href="{{ path('app_profile_show', {'id': app.user.id}) }}">Профиль</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link disable" href="{{ path('app_main') }}">{{ app.user.email }}</a>

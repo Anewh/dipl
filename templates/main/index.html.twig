@@ -20,7 +20,6 @@
 	<div
 		class="container py-4">
 		<div class="p-5 mb-4 bg-body-tertiary rounded-3">
-
 			<div class="row align-items-md-stretch">
 				<div class="col-md-6">
 					<div class="container-fluid py-5">
@@ -29,7 +28,11 @@
 
                         {# <div {{ vue_component('MyComponent', { 'name': 'text' }) }}></div> #}
 						<p class="col-md-8 fs-4">Управляйте сохраняемой информацией о проектах и ее представлением. Следите за активностью разработчиков </p>
-						<button class="btn btn-outline-secondary btn-lg" type="button" href="#">Авторизация</button>
+						{% if app.user %}
+							<a class="btn btn-outline-secondary btn-lg" type="button" href="{{ path('app_project_index') }}">Проекты</a>
+						{% else %}
+							<a class="btn btn-outline-secondary btn-lg" type="button" href="{{ path('app_login') }}">Авторизация</a>
+						{% endif %}
 					</div>
 				</div>
 			<div class="col-md-6 d-flex justify-content-end">

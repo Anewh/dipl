@@ -9,13 +9,14 @@ use App\Entity\Team;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
     const USERS = [
         [
             'phone' => '89205553535',
-            'roles' => ['ROLE_USER'],
+            'roles' => ['ROLE_ADMIN'],
             'email' => 'user@example.com',
             'password' => 'password',
             'lastname' => 'Иванов',
@@ -87,6 +88,15 @@ class AppFixtures extends Fixture
         ]
     ];
 
+    private UserPasswordHasherInterface $userPasswordHashed;
+
+    public function __construct(
+        UserPasswordHasherInterface $userPasswordHashed,
+    ) {
+        $this->userPasswordHashed = $userPasswordHashed;
+    }
+
+    
     public function load(ObjectManager $manager): void
     {
         // $product = new Product();
@@ -98,10 +108,12 @@ class AppFixtures extends Fixture
                 ->setEmail($value['email'])
                 ->setPhone($value['phone'])
                 ->setRoles($value['roles'])
-                ->setPassword($value['password'])
+                //->setPassword()
                 ->setFirstname($value['firstname'])
                 ->setLastname($value['lastname'])
                 ->setGithubName($value['githubName']);
+            $password = $this->userPasswordHashed->hashPassword($user, $value['password']);
+            $user->setPassword($password);
             array_push($users, $user);
             //$manager->persist($user);
         }
@@ -181,4 +193,34 @@ class AppFixtures extends Fixture
 
         $manager->flush();
     }
+
+    // public function load(ObjectManager $manager): void
+    // {
+    //     $user = new User();
+    //     $password = $this->userPasswordHashed->hashPassword(
+    //         $user,
+    //         'password'
+    //     );
+    //     $user
+    //         ->setEmail('user@example.com')
+    //         ->setPassword($password)
+    //         ->setBalance(1000.0);
+
+    //     $manager->persist($user);
+
+    //     $admin = new User();
+    //     $password = $this->userPasswordHashed->hashPassword(
+    //         $admin,
+    //         'password'
+    //     );
+    //     $admin
+    //         ->setEmail('admin@example.com')
+    //         ->setPassword($password)
+    //         ->setRoles(['ROLE_SUPER_ADMIN'])
+    //         ->setBalance(1000.0);
+
+    //     $manager->persist($admin);
+
+    //     $manager->flush();
+    // }
 }
