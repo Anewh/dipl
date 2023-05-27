@@ -3,13 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Project;
+use App\Entity\User;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Github\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpClient\HttplugClient;
 
 #[Route('/projects')]
 class ProjectController extends AbstractController
@@ -17,8 +20,12 @@ class ProjectController extends AbstractController
     #[Route('/', name: 'app_project_index', methods: ['GET'])]
     public function index(ProjectRepository $projectRepository): Response
     {
+        /** @var ?User $user */
+        $user = $this->getUser();
+     
         return $this->render('project/index.html.twig', [
-            'projects' => $projectRepository->findAll(),
+            'projects' => $user->getTeam()->getProjects(),
+            'personal_projects' => $user->getProjects()
         ]);
     }
 

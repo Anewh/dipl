@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Project;
 use App\Entity\Storage;
 use App\Form\StorageType;
 use App\Repository\StorageRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,10 +18,25 @@ class StorageController extends AbstractController
     #[Route('/', name: 'app_storage_index', methods: ['GET'])]
     public function index(StorageRepository $storageRepository): Response
     {
+
         return $this->render('storage/index.html.twig', [
             'storages' => $storageRepository->findAll(),
         ]);
     }
+
+    /**
+    *
+    * @ParamConverter("project", options={"mapping": {"project_id"   : "id"}})
+    *
+    */
+    #[Route('/{project_id}/statistic', name: 'app_storage_by_project', methods: ['GET'])]
+    public function indexByProject(StorageRepository $storageRepository, Project $project): Response
+    {
+        return $this->render('storage/index_by_project.html.twig', [
+            'storages' => $storageRepository->findByProject($project),
+        ]);
+    }
+
 
     #[Route('/new', name: 'app_storage_new', methods: ['GET', 'POST'])]
     public function new(Request $request, StorageRepository $storageRepository): Response

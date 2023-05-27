@@ -12,17 +12,15 @@
             <p class="lead">для добавления проектов и добавления команды необходимо связаться с администратором</p>
 		</div>
 		<main>
-
 			<div class="needs-validation" novalidate="">
 				<div class="py-5 text-center w-25 m-auto">
-
-					{{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
-
-					<a href="{{ path('app_user_index') }}">back to list</a>
-
+					{{ include('user/_form.html.twig', {'button_label': 'Сохранить'}) }}
 					{{ include('user/_delete_form.html.twig') }}
 				</div>
 			</div>
 		</main>
 	</div>
 {% endblock %}
+
+
+
