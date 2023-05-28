@@ -33,7 +33,7 @@ class Project
     #[ORM\OneToMany(mappedBy: 'project', targetEntity: Page::class)]
     private Collection $pages;
 
-    #[ORM\OneToMany(mappedBy: 'project', targetEntity: Field::class)]
+    #[ORM\OneToMany(mappedBy: 'project', targetEntity: Field::class, cascade:['all'])]
     private Collection $fields;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'projects')]
@@ -51,6 +51,11 @@ class Project
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     public function getFullName(): ?string
@@ -227,7 +232,8 @@ class Project
         return $this;
     }
 
-    public function toArray(){
-        
+    public function __toString(): string
+    {
+        return $this->getFullName();
     }
 }

@@ -1,5 +1,19 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}test{% endblock %}
+
+{% block body %}
+{{ render_chart(chart) }}
+
+{# You can pass HTML attributes as a second argument to add them on the <canvas> tag #}
+{{ render_chart(chart, {'class': 'my-chart'}) }}
+{% endblock %}
+
+
+
+
+{# {% extends 'base.html.twig' %}
+
 {% block title %}Storage index{% endblock %}
 
 {% block body %}
@@ -34,4 +48,4 @@
     </table>
 
     <a href="{{ path('app_storage_new') }}">Create new</a>
-{% endblock %}
+{% endblock %} #}

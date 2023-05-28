@@ -37,6 +37,11 @@ class Field
         return $this->id;
     }
 
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     public function getHeader(): ?string
     {
         return $this->header;
@@ -107,5 +112,10 @@ class Field
         $this->link = $link;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getHeader();
     }
 }

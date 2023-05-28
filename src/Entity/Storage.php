@@ -28,6 +28,11 @@ class Storage
         return $this->id;
     }
 
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     public function getLink(): ?string
     {
         return $this->link;
@@ -62,5 +67,10 @@ class Storage
         $this->project = $project;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getLink();
     }
 }

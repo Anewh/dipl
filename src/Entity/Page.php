@@ -43,6 +43,11 @@ class Page
         return $this->id;
     }
 
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     public function getFile(): ?string
     {
         return $this->file;
@@ -120,4 +125,5 @@ class Page
 
         return $this;
     }
+    
 }

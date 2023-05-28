@@ -45,7 +45,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $projects;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $github_name = null;
+    private ?string $githubname = null;
 
     #[ORM\Column(length: 1024, nullable: true)]
     private ?string $token = null;
@@ -64,6 +64,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     public function getEmail(): ?string
@@ -196,12 +201,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getGithubName(): ?string
     {
-        return $this->github_name;
+        return $this->githubname;
     }
 
-    public function setGithubName(?string $github_name): self
+    public function setGithubName(?string $githubname): self
     {
-        $this->github_name = $github_name;
+        $this->githubname = $githubname;
 
         return $this;
     }
@@ -242,4 +247,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function __toString(): string
+    {
+        return $this->getFirstname() . " " . $this->getLastname();
+    }
 }

@@ -2,17 +2,144 @@
 
 namespace App\Service;
 
-use App\Dto\UserDto;
+use App\Entity\Project;
+use App\Entity\Storage;
 use App\Exception\BillingUnavailableException;
+use Doctrine\ORM\EntityManagerInterface;
+use Github\Client;
+use Symfony\Component\HttpClient\HttplugClient;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
 
-class GithubClient
+class GithubService
 {
-    protected const GET = 'GET';
-    protected const POST = 'POST';
+    private const DATE_FORMAT = 'Y-m-d'; 
+    private ChartBuilderInterface $chartBuilder;
 
+    public function __construct(ChartBuilderInterface $chartBuilder, EntityManagerInterface $em)
+    {
+        $this->chartBuilder = $chartBuilder;
+        
+    }
+
+    // отобразить статистику для массива репозиториев
+    //TODO - норм проверка на то, что токен пользователя задан
+    //TODO - заглушку убрать
+    public function getStoragesData($project, $user)
+    {
+        $client = Client::createWithHttpClient(new HttplugClient());
+        $team = $project->getTeams();
+        //$client->authenticate($user->getToken(), null, \Github\AuthMethod::ACCESS_TOKEN);
+        $client->authenticate('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', null, \Github\AuthMethod::ACCESS_TOKEN);
+        
+        $storages = $project->getStorage();
+
+        //dd($storages);
+        $branches = [];
+        //получить все ветки для всех репозиториев проекта
+
+        // foreach($storages as $s){
+        //     array_push($repositories, $client->api('repo')->branches($user->getGithubName(), $s->getLink()));
+        // }
+        
+        $branches  = $client->api('repo')->branches($user->getGithubName(), 'diplom_app');
+        $commits = $client->api('repo')->commits()->all('Terqaz', 'diplom_app', array('sha' => 'master'));
+        //dd($commits);
+
+        //$branches = $client->api('repo')->branches('GrishaginEvgeny', 'IntaroPracticeProject');
+        // dd($branches);
+        // получить активность по всем репозиториям проекта
+        //$storages = $project->getStorage();
+      
+      
+        // dd($storages);
+        // foreach($storages as $storage){
+
+        // }
+
+        // даты 
+        // 
+
+        $chart = $this->chartBuilder->createChart(Chart::TYPE_LINE);
+
+        $chart->setData([
+            'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            'datasets' => [
+                [
+                    'label' => 'My First dataset',
+                    'backgroundColor' => 'rgb(255, 99, 132)',
+                    'borderColor' => 'rgb(255, 99, 132)',
+                    'data' => [0, 10, 5, 2, 20, 30, 45],
+                ],
+            ],
+        ]);
+
+        $chart->setOptions([
+            'scales' => [
+                'y' => [
+                    'suggestedMin' => 0,
+                    'suggestedMax' => 100,
+                ],
+            ],
+        ]);
+
+        return $chart;
+
+        
+        // foreach($projects as $project){
+        //     array_push($storages, $project->getStorages());
+        // }
+    }
+
+    public function getStoragesByTeams(array $projects)
+    {
+
+    }
     
+    public function getCommitsByInterval(Storage $storage, $data)
+    {
+
+    }
+
+    public function getCommitsByMessage(string $message)
+    {
+
+    }
+
+    public function test()
+    {
+        $chart = $this->chartBuilder->createChart(Chart::TYPE_LINE);
+
+        $chart->setData([
+            'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            'datasets' => [
+                [
+                    'label' => 'My First dataset',
+                    'backgroundColor' => 'rgb(255, 99, 132)',
+                    'borderColor' => 'rgb(255, 99, 132)',
+                    'data' => [0, 10, 5, 2, 20, 30, 45],
+                ],
+            ],
+        ]);
+
+        $chart->setOptions([
+            'scales' => [
+                'y' => [
+                    'suggestedMin' => 0,
+                    'suggestedMax' => 100,
+                ],
+            ],
+        ]);
+
+        return $chart;
+        // return $this->render('home/index.html.twig', [
+        //     'chart' => $chart,
+        // ]);
+    }
 
 
     // public function auth(array $credentials): array

@@ -3,9 +3,15 @@
 {% block title %}Storage index{% endblock %}
 
 {% block body %}
-    <h1>Storage index</h1>
+    <h1>Storages by project</h1>
+    <div class="container">
+    {{ render_chart(chart) }}
 
-    <table class="table">
+{# You can pass HTML attributes as a second argument to add them on the <canvas> tag #}
+    {{ render_chart(chart, {'class': 'my-chart'}) }}
+    </div>
+
+    {# <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -31,7 +37,7 @@
             </tr>
         {% endfor %}
         </tbody>
-    </table>
+    </table> #}
 
     <a href="{{ path('app_storage_new') }}">Create new</a>
 {% endblock %}

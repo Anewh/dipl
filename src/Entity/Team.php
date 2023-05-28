@@ -36,6 +36,11 @@ class Team
         return $this->id;
     }
 
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     /**
      * @return Collection<int, Project>
      */
@@ -103,5 +108,10 @@ class Team
         $this->name = $name;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getName();
     }
 }

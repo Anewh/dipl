@@ -16,12 +16,13 @@ class AppFixtures extends Fixture
     const USERS = [
         [
             'phone' => '89205553535',
-            'roles' => ['ROLE_ADMIN'],
+            'roles' => ['ROLE_USER'],
             'email' => 'user@example.com',
             'password' => 'password',
             'lastname' => 'Иванов',
             'firstname' => 'Иван',
-            'githubName' => 'exampleName'
+            'githubName' => 'exampleName',
+            'token' => 'example'
         ],
         [
             'phone' => '89209999999',
@@ -30,22 +31,24 @@ class AppFixtures extends Fixture
             'password' => 'password',
             'lastname' => 'Валя',
             'firstname' => 'Петрова',
-            'githubName' => 'validatorValya'
+            'githubName' => 'validatorValya',
+            'token' => 'example'
         ],
         [
             'phone' => '89508008080',
-            'roles' => ['ROLE_USER'],
+            'roles' => ['ROLE_ADMIN'],
             'email' => 'again@example.com',
             'password' => 'password',
-            'lastname' => 'Николай',
-            'firstname' => 'Бессонов',
-            'githubName' => 'pamagite'
+            'lastname' => 'Холин',
+            'firstname' => 'Владимир',
+            'githubName' => 'Terqaz',
+            'token' => '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'
         ]
     ];
 
     const STORAGE = [
-        'description' => 'Описание для репозитория. Просто тестовое. Репозиторий пока что рандомный, с какой-то лабы по ЗИ. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        'link' => 'https://github.com/Anewh/rsa'
+        'description' => 'Диплом и работа с ботами',
+        'link' => 'diplom_app'
     ];
     const PROJECTS = [
         [
@@ -63,6 +66,12 @@ class AppFixtures extends Fixture
             'codeName' => 'очередная лагучая херня',
             'type' => 'mobile'
         ],
+        [
+            'fullName' => 'Диплом чат-боты',
+            'codeName' => 'чужой проект для показа тестов',
+            'type' => 'web'
+        ],
+        
     ];
     const FIELDS = [
         [
@@ -111,7 +120,8 @@ class AppFixtures extends Fixture
                 //->setPassword()
                 ->setFirstname($value['firstname'])
                 ->setLastname($value['lastname'])
-                ->setGithubName($value['githubName']);
+                ->setGithubName($value['githubName'])
+                ->setToken($value['token']);
             $password = $this->userPasswordHashed->hashPassword($user, $value['password']);
             $user->setPassword($password);
             array_push($users, $user);
@@ -155,10 +165,18 @@ class AppFixtures extends Fixture
         $team2 = (new Team())->addUser($users[1])->addUser($users[2])->setName('Team 2');
 
         $projects[0]->addTeam($team1);
-        $projects[0]->addTeam($team2);
-        $projects[1]->addTeam($team2);
-        $projects[2]->addTeam($team2);
+        $projects[1]->addTeam($team1);
+        $projects[2]->addTeam($team1);
 
+        $projects[3]->addTeam($team2);
+        $projects[3]->addStorage($storage);
+
+
+        $manager->persist($team1);
+        $manager->persist($team2);
+        $manager->persist($storage);
+        
+        
         foreach($projects as $elem){
             $manager->persist($elem);
         }
@@ -170,10 +188,6 @@ class AppFixtures extends Fixture
         foreach($fields as $elem){
             $manager->persist($elem);
         }
-        $manager->persist($team1);
-        $manager->persist($team2);
-        $manager->persist($storage);
-        
         // foreach (self::COURCES as $i => $value) {
         //     $course = (new Course())
         //         ->setCode($value['code'])

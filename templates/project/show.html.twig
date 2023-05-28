@@ -43,7 +43,7 @@
 						{% endfor %}
 					</nav>
 				</aside>
-				<a class="btn btn-dark rounded-pill px-3" href="{{ path('app_storage_by_project', {'project_id': project.id}) }}">Статистика</a>
+				{# <a class="btn btn-dark rounded-pill px-3" href="{{ path('app_storage_by_project', {'project_id': project.id}) }}">Статистика</a> #}
 			</div>
 			<div class="col-sm-8">
 				{% for row in project.fields|batch(3) %}
