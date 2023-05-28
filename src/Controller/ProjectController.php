@@ -117,7 +117,8 @@ class ProjectController extends AbstractController
             ->toArray();
 
         return $this->render('project/show.html.twig', [
-            'projectData' => $normalizer->normalize($project, null, $context)//$project
+            'projectData' => $normalizer->normalize($project, null, $context),//$project
+            'project' => $project
         ]);
     }
 

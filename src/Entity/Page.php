@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Nullable;
 
 #[ORM\Entity(repositoryClass: PageRepository::class)]
 class Page
@@ -23,10 +24,10 @@ class Page
     #[ORM\JoinColumn(nullable: false)]
     private ?Project $project = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $relation = null;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'pages')]
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'pages', nullable: true )]
     private ?self $parent = null;
 
 

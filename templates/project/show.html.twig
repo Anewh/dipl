@@ -5,7 +5,7 @@
 
 {% block body %}
 
-	{# <main class="container-fluid py-3">
+	<main class="container-fluid py-3">
 		<div class="row">
 			<div class="col-sm-2">
 				<aside class="bd-aside sticky-xl-top text-body-secondary align-self-start mb-3 mb-xl-5 px-2">
@@ -29,8 +29,8 @@
 							</ul>
 						{% endfor %}
 					</nav>
-				</aside>
-				<aside class="bd-aside sticky-xl-top text-body-secondary align-self-start mb-3 mb-xl-5 px-2">
+				{# </aside> #}
+				{# <aside class="bd-aside sticky-xl-top text-body-secondary align-self-start mb-3 mb-xl-5 px-2"> #}
 					<h2 class="h6 pb-3 mb-1 border-bottom">Пользователи</h2>
 					<nav class="small" id="toc">
 						{% for user in project.users %}
@@ -43,10 +43,11 @@
 						{% endfor %}
 					</nav>
 				</aside>
-				 <a class="btn btn-dark rounded-pill px-3" href="{{ path('app_storage_by_project', {'project_id': project.id}) }}">Статистика</a> 
+				 {# <a class="btn btn-dark rounded-pill px-3" href="{{ path('app_storage_by_project', {'project_id': project.id}) }}">Статистика</a>  #}
 			</div>
 			<div class="col-sm-8">
-				{% for row in project.fields|batch(3) %}
+			<div {{ vue_component('ProjectComponent', { 'projectData': projectData } ) }}></div>
+				{# {% for row in project.fields|batch(3) %}
 					<div class="row" data-masonry="{&quot;percentPosition&quot;: true }" style="position: relative; height: 690px;">
 						{% for field in row %}
 							{% if field.type == 'file' %}
@@ -111,7 +112,7 @@
 							{% endif %}
 						{% endfor %}
 					</div>
-				{% endfor %}
+				{% endfor %} #}
 			</div>
 			<div class="col-sm-2 mt-2">
 				<nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4 border-end list-group">
@@ -136,7 +137,7 @@
 
 	<a href="{{ path('app_project_edit', {'id': project.id}) }}">edit</a>
 
-	{{ include('project/_delete_form.html.twig') }} #}
-	<div {{ vue_component('ProjectComponent', { 'projectData': projectData } ) }}></div>
+	{{ include('project/_delete_form.html.twig') }}
+	
 	{# <div {{ vue_component('MyComponent', { 'name': 'FFFFFFFFFFFFFFFFF' } ) }}></div> #}
 {% endblock %}
