@@ -2,7 +2,7 @@
     "sqltools.connections": [
         {
             "previewLimit": 50,
-            "server": "172.20.0.3",
+            "server": "172.20.0.2",
             "port": 5432,
             "driver": "PostgreSQL",
             "name": "diplom",

@@ -29,6 +29,7 @@ class Page
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'pages')]
     private ?self $parent = null;
 
+
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
     private Collection $pages;
 

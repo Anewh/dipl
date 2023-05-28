@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\FieldRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: FieldRepository::class)]
 class Field
@@ -12,23 +13,29 @@ class Field
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['projectShow'])]
     private ?int $id = null;
 
+    #[Groups(['projectShow'])]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $header = null;
 
+    #[Groups(['projectShow'])]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
+    #[Groups(['projectShow'])]
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
     #[ORM\ManyToOne(inversedBy: 'fields')]
     private ?Project $project = null;
 
+    #[Groups(['projectShow'])]
     #[ORM\Column(length: 1024, nullable: true)]
     private ?string $link_name = null;
 
+    #[Groups(['projectShow'])]
     #[ORM\Column(length: 1024, nullable: true)]
     private ?string $link = null;
 

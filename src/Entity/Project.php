@@ -6,6 +6,7 @@ use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 class Project
@@ -13,6 +14,7 @@ class Project
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['projectShow'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -34,6 +36,7 @@ class Project
     private Collection $pages;
 
     #[ORM\OneToMany(mappedBy: 'project', targetEntity: Field::class, cascade:['all'])]
+    #[Groups(['projectShow'])]
     private Collection $fields;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'projects')]
@@ -186,6 +189,13 @@ class Project
         return $this->fields;
     }
 
+
+    /**
+     * Add fields
+     *
+     * @param \App\Entity\Field $fields
+     * @return Field
+     */
     public function addField(Field $field): self
     {
         if (!$this->fields->contains($field)) {
@@ -196,6 +206,11 @@ class Project
         return $this;
     }
 
+     /**
+     * Remove posts
+     *
+     * @param \App\Entity\Field $fields
+     */
     public function removeField(Field $field): self
     {
         if ($this->fields->removeElement($field)) {

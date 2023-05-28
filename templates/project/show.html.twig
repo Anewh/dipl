@@ -5,7 +5,7 @@
 
 {% block body %}
 
-	<main class="container-fluid py-3">
+	{# <main class="container-fluid py-3">
 		<div class="row">
 			<div class="col-sm-2">
 				<aside class="bd-aside sticky-xl-top text-body-secondary align-self-start mb-3 mb-xl-5 px-2">
@@ -43,7 +43,7 @@
 						{% endfor %}
 					</nav>
 				</aside>
-				{# <a class="btn btn-dark rounded-pill px-3" href="{{ path('app_storage_by_project', {'project_id': project.id}) }}">Статистика</a> #}
+				 <a class="btn btn-dark rounded-pill px-3" href="{{ path('app_storage_by_project', {'project_id': project.id}) }}">Статистика</a> 
 			</div>
 			<div class="col-sm-8">
 				{% for row in project.fields|batch(3) %}
@@ -136,5 +136,7 @@
 
 	<a href="{{ path('app_project_edit', {'id': project.id}) }}">edit</a>
 
-	{{ include('project/_delete_form.html.twig') }}
+	{{ include('project/_delete_form.html.twig') }} #}
+	<div {{ vue_component('ProjectComponent', { 'projectData': projectData } ) }}></div>
+	{# <div {{ vue_component('MyComponent', { 'name': 'FFFFFFFFFFFFFFFFF' } ) }}></div> #}
 {% endblock %}

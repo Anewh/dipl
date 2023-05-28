@@ -2,17 +2,25 @@
 
 namespace App\Controller;
 
+use App\Entity\Field;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Form\ProjectType;
+use App\Repository\FieldRepository;
 use App\Repository\ProjectRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 use Github\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpClient\HttplugClient;
+use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
+use Symfony\Component\Serializer\Encoder\DecoderInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/projects')]
 class ProjectController extends AbstractController
@@ -48,13 +56,68 @@ class ProjectController extends AbstractController
         ]);
     }
 
+
+    #[Route('/{id}/field/{field_id}/edit', name: 'app_field_edit', methods: ['GET', 'POST'])]
+    public function editField(Request $request, Project $project, string $field_id, FieldRepository $fieldRepository, SerializerInterface $serializer, ProjectRepository $projectRepository): Response
+    {
+        // $form = $this->createForm(FieldType::class, $field);
+        
+        // $form->handleRequest($request);
+
+
+        //dd($request->getContent());
+        $field = $serializer->deserialize(
+            $request->getContent(),
+            Field::class,
+            'json'
+        );
+
+        
+        
+        //$person = $serializer->deserialize($data, Person::class, 'xml')
+        if($field_id === 'new'){
+            $project->addField($field);
+        }
+        else {
+            $oldField = $project->getFields()->matching(
+                Criteria::create()
+                ->where(Criteria::expr()->eq('id', $field_id))
+            )->get(0);
+
+            $project->removeField($oldField);
+            $project->addField($field);
+        }
+        $projectRepository->save($project, true);
+
+        return new JsonResponse([
+            'status' => '200',
+            'new_id' => $field->getId()
+            ]
+        );
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     $fieldRepository->save($field, true);
+
+        //     return $this->redirectToRoute('app_field_index', [], Response::HTTP_SEE_OTHER);
+        // }
+
+        // return $this->renderForm('field/edit.html.twig', [
+        //     'field' => $field,
+        //     'form' => $form,
+        // ]);
+    }
+
+
     #[Route('/{id}', name: 'app_project_show', methods: ['GET'])]
-    public function show(Project $project, ManagerRegistry $doctrine): Response
+    public function show(Project $project, ManagerRegistry $doctrine, NormalizerInterface $normalizer): Response
     {
         $entityManager = $doctrine->getManager();
-        
+        $context = (new ObjectNormalizerContextBuilder())
+            ->withGroups(['projectShow'])
+            ->withSkipNullValues(true)
+            ->toArray();
+
         return $this->render('project/show.html.twig', [
-            'project' => $project
+            'projectData' => $normalizer->normalize($project, null, $context)//$project
         ]);
     }
 
@@ -85,4 +148,5 @@ class ProjectController extends AbstractController
 
         return $this->redirectToRoute('app_project_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }

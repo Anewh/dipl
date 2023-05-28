@@ -1,1 +1,9 @@
+@import '~bootstrap-icons/font/bootstrap-icons.css';
 @import "~bootstrap/scss/bootstrap";
+
+
+.add-card:hover {
+    color: $primary;
+    //background-color: $primary;
+    border-color: $primary;
+}
