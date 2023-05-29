@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use phpDocumentor\Reflection\Types\Nullable;
 
 #[ORM\Entity(repositoryClass: PageRepository::class)]
@@ -15,24 +16,34 @@ class Page
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['pageShow'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['pageShow'])]
     private ?string $file = null;
 
     #[ORM\ManyToOne(inversedBy: 'pages')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['pageShow'])]
     private ?Project $project = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['pageShow'])]
     private ?string $relation = null;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'pages', nullable: true )]
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'pages')]
+    #[Groups(['pageShow'])]
     private ?self $parent = null;
 
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
+    #[Groups(['pageShow'])]
     private Collection $pages;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['pageShow'])]
+    private ?string $header = null;
 
 
     public function __construct()
@@ -86,9 +97,9 @@ class Page
         return $this;
     }
 
-    public function getParent(): ?self
+    public function getParent(): ?int
     {
-        return $this->parent;
+        return $this->parent?$this->parent->getId(): -1;
     }
 
     public function setParent(?self $parent): self
@@ -116,14 +127,26 @@ class Page
         return $this;
     }
 
-    public function removePage(self $page): self
+    // public function removePage(self $page): self
+    // {
+    //     if ($this->pages->removeElement($page)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($page->getParent() === $this) {
+    //             $page->setParent(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
+
+    public function getHeader(): ?string
     {
-        if ($this->pages->removeElement($page)) {
-            // set the owning side to null (unless already changed)
-            if ($page->getParent() === $this) {
-                $page->setParent(null);
-            }
-        }
+        return $this->header;
+    }
+
+    public function setHeader(string $header): self
+    {
+        $this->header = $header;
 
         return $this;
     }

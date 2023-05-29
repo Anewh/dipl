@@ -1,151 +1,30 @@
 <template>
-    <!-- <main class="container-fluid py-3">
-        <div class="row">
-            <div class="col-sm-2">
-                <aside class="bd-aside sticky-xl-top text-body-secondary align-self-start mb-3 mb-xl-5 px-2">
-                    <div class="list-group-flush mb-3">
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">{{ project.fullName }}</h5>
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <a href="#" @click="addCard" class="ms-8">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="w-25 mx-auto">
+                                        <i class="bi bi-clipboard-plus text-secondary display-1"></i>
+                                    </div>
+                                </div>
                             </div>
-                            <p class="mb-1">{{ project.CodeName }}</p>
-                            <small>{{ project.type }}</small>
                         </a>
                     </div>
-                    <h2 class="h6 pb-3 mb-1 border-bottom">Команды</h2>
-                    <nav class="small" id="toc">
-                        {% for team in project.teams %}
-                        <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <a href="{{ path('app_team_show', {'id': team.id}) }}"
-                                    class="list-group-item-action text-decoration-none">{{ team.name }}</a>
-                                <span class="badge bg-primary rounded-pill">{{ team.users.count }}</span>
-                            </li>
-                        </ul>
-                        {% endfor %}
-                    </nav>
-                </aside>
-                <aside class="bd-aside sticky-xl-top text-body-secondary align-self-start mb-3 mb-xl-5 px-2">
-                    <h2 class="h6 pb-3 mb-1 border-bottom">Пользователи</h2>
-                    <nav class="small" id="toc">
-                        {% for user in project.users %}
-                        <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <a href="{{ path('app_user_show', {'id': user.id}) }}"
-                                    class="list-group-item-action text-decoration-none">{{ user.firstname ~ ' ' ~
-                                        user.lastname }}</a>
-                                <span class="badge bg-primary rounded-pill">{{ user.roles[0] }}</span>
-                            </li>
-                        </ul>
-                        {% endfor %}
-                    </nav>
-                </aside>
-            </div> -->
-    <div class="col-sm-8">
-        <div class="add-card card p-3">
-            <figure class="p-3 mb-0">
-                <a href="#" @click="addCard"><i class="bi bi-clipboard-plus text-secondary display-1"></i></a>
-            </figure>
-        </div>
-        <div v-for="field in project.fields" :key="field.uid">
-
-            <FieldComponent v-model:header="field.header" v-model:content="field.content" v-model:link="field.link"
-                v-model:link_name="field.link_name" v-model:type="field.type" v-model:id="field.id"  :projectId="project.id"/>
-
-        </div>
-    </div>
-    <!-- {% for row in project.fields|batch(3) %}
-                <div class="row" data-masonry="{&quot;percentPosition&quot;: true }"
-                    style="position: relative; height: 690px;">
-                    {% for field in row %}
-                    {% if field.type == 'file' %}
-                    <div class="col-sm-6 col-lg-4 mb-4">
-                        <div class="card p-3">
-                            <figure class="p-3 mb-0">
-                                <blockquote class="blockquote">
-                                    <p>Это пример поля для файла</p>
-                                </blockquote>
-                                <figcaption class="blockquote-footer mb-0 text-body-secondary">
-                                    и его краткого описания
-                                    <cite title="Source Title">
-                                        а тут ссылка на скачивание
-                                    </cite>
-                                </figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                    {% elseif field.type == 'img' %}
-                    <div class="col-sm-6 col-lg-4 mb-4">
-                        <div class="card">
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="200"
-                                xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap"
-                                preserveaspectratio="xMidYMid slice" focusable="false">
-                                <title>Placeholder</title>
-                                <rect width="100%" height="100%" fill="#868e96"></rect>
-                                <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-                            </svg>
-                            <div class="card-body">
-                                <h5 class="card-title">Это пример поля с типом "img"</h5>
-                                <p class="card-text">This card has supporting text below as a natural lead-in to additional
-                                    content.</p>
-                                <p class="card-text">
-                                    <small class="text-body-secondary">Last updated 3 mins ago</small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    {% elseif field.type == 'link' %}
-                    <div class="col-sm-6 col-lg-4 mb-4">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <h5 class="card-title">Поле типа "link"</h5>
-                                <p class="card-text">Ну и описание ссылки</p>
-                                <p class="card-text">
-                                    <small class="text-body-secondary">
-                                        сама ссылка
-                                    </small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    {% elseif field.type == 'text' %}
-                    <div class="col-sm-6 col-lg-4 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">А тут типа длинный текст</h5>
-                                <p class="card-text">Ну что-то вроде... This is another card with title and supporting text
-                                    below. This card has some additional content to make it slightly taller overall.</p>
-                                <p class="card-text">
-                                    <small class="text-body-secondary"></small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div> -->
-    <!-- <div class="col-sm-2 mt-2">
-                <nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4 border-end list-group">
-                    <nav class="nav nav-pills flex-column">
-                        <a class="nav-link" href="#item-1">Item 1</a>
-                        <nav class="nav nav-pills flex-column">
-                            <a class="nav-link ms-3 my-1" href="#item-1-1">Item 1-1</a>
-                            <a class="nav-link ms-3 my-1" href="#item-1-2">Item 1-2</a>
-                        </nav>
-                        <a class="nav-link" href="#item-2">Item 2</a>
-                        <a class="nav-link" href="#item-3">Item 3</a>
-                        <nav class="nav nav-pills flex-column">
-                            <a class="nav-link ms-3 my-1" href="#item-3-1">Item 3-1</a>
-                            <a class="nav-link ms-3 my-1" href="#item-3-2">Item 3-2</a>
-                        </nav>
-                    </nav>
-                </nav>
+                <div v-for="field in project.fields" :key="field.uid">
+
+                    <FieldComponent v-model:header="field.header" v-model:content="field.content" v-model:link="field.link"
+                        v-model:link_name="field.link_name" v-model:type="field.type" v-model:id="field.id"
+                        :projectId="project.id" />
+
+                </div>
             </div>
         </div>
-    </main> -->
-    {{ projectData }}
+    </div>
 </template>
 
 <script>
@@ -183,11 +62,21 @@ export default {
                 link: '',
                 link_name: '',
                 type: '',
-                id: 'new',
+                id: 'new'
             })
+        },
+        deleteCard(cardId) {
+            var indexDel = 0;
+            for (var i = 0 ; i < this.project.fields.length; i++) { 
+                if(this.project.fields[i].id == cardId){
+                    indexDel = i;
+                    console.log(indexDel);
+                    console.log(this.project.fields[i].header);
+                }
+            }
+            this.project.fields.splice(indexDel, 1);
         }
     },
 }
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

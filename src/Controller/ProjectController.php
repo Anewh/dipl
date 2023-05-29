@@ -89,6 +89,7 @@ class ProjectController extends AbstractController
         }
         $projectRepository->save($project, true);
 
+
         return new JsonResponse([
             'status' => '200',
             'new_id' => $field->getId()
@@ -105,6 +106,25 @@ class ProjectController extends AbstractController
         //     'form' => $form,
         // ]);
     }
+
+
+
+    #[Route('/{id}/field/{field_id}/delete', name: 'app_field_delete', methods: ['POST'])]
+    public function deleteField(Request $request, Project $project, string $field_id, FieldRepository $fieldRepository, SerializerInterface $serializer, ProjectRepository $projectRepository): Response
+    {
+        $field = ($request->getContent());
+
+        $project->removeField($project->getFields()->matching(Criteria::create()->where(Criteria::expr()->eq('id', $field_id)))->get(0));
+        $projectRepository->save($project, true);     
+        
+
+        return new JsonResponse([
+            'status' => 'deleted',
+            'id' => $field_id
+            ]
+        );
+    }
+
 
 
     #[Route('/{id}', name: 'app_project_show', methods: ['GET'])]
@@ -149,5 +169,7 @@ class ProjectController extends AbstractController
 
         return $this->redirectToRoute('app_project_index', [], Response::HTTP_SEE_OTHER);
     }
-
 }
+
+
+

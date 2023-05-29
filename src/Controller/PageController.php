@@ -5,10 +5,13 @@ namespace App\Controller;
 use App\Entity\Page;
 use App\Form\PageType;
 use App\Repository\PageRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 #[Route('/page')]
 class PageController extends AbstractController
@@ -41,12 +44,38 @@ class PageController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_page_show', methods: ['GET'])]
-    public function show(Page $page): Response
+    public function show(Page $page, ManagerRegistry $doctrine, NormalizerInterface $normalizer): Response
     {
+
+        $entityManager = $doctrine->getManager();
+        $context = (new ObjectNormalizerContextBuilder())
+            ->withGroups(['pageShow'])
+            ->withSkipNullValues(true)
+            ->toArray();
+
         return $this->render('page/show.html.twig', [
+            'pageData' => $normalizer->normalize($page, null, $context),//$project
             'page' => $page,
         ]);
     }
+
+
+    // #[Route('/{id}', name: 'app_project_show', methods: ['GET'])]
+    // public function show(Project $project, ManagerRegistry $doctrine, NormalizerInterface $normalizer): Response
+    // {
+    //     $entityManager = $doctrine->getManager();
+    //     $context = (new ObjectNormalizerContextBuilder())
+    //         ->withGroups(['projectShow'])
+    //         ->withSkipNullValues(true)
+    //         ->toArray();
+
+    //     return $this->render('project/show.html.twig', [
+    //         'projectData' => $normalizer->normalize($project, null, $context),//$project
+    //         'project' => $project
+    //     ]);
+    // }
+
+
 
     #[Route('/{id}/edit', name: 'app_page_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Page $page, PageRepository $pageRepository): Response

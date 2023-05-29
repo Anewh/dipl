@@ -33,6 +33,7 @@ class Project
     private Collection $Teams;
 
     #[ORM\OneToMany(mappedBy: 'project', targetEntity: Page::class)]
+    
     private Collection $pages;
 
     #[ORM\OneToMany(mappedBy: 'project', targetEntity: Field::class, cascade:['all'])]
