@@ -59,8 +59,8 @@ export default {
             //console.log(this.$props.header);
             h.then((html) => {
                 const body = structuredClone(this.page);
-                // fetch(`/page/${this.page.id}/edit`, {
-                fetch(`/${this.page.project.id}/page/${this.page.id}/edit`, {
+                fetch(`/page/${this.page.id}/edit`, {
+                // fetch(`/${this.page.project.id}/page/${this.page.id}/edit`, {
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: { 'Content-Type': 'application/json' }

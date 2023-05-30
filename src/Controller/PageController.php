@@ -111,7 +111,7 @@ class PageController extends AbstractController
         $oldPage->setFile($newPage->getFile());
         $oldPage->setHeader($newPage->getHeader());
         
-        $oldPage->setProject($newPage->getProject());
+        //$oldPage->setProject($newPage->getProject());
 
         $pageRepository->save($oldPage, true);
 

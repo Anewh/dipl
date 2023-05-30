@@ -50,6 +50,8 @@ class GithubService
         $commits = $client->api('repo')->commits()->all('Terqaz', 'diplom_app', array('sha' => 'master'));
         //dd($commits);
 
+        
+
         //$branches = $client->api('repo')->branches('GrishaginEvgeny', 'IntaroPracticeProject');
         // dd($branches);
         // получить активность по всем репозиториям проекта

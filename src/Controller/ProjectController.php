@@ -238,33 +238,33 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/page/{page_id}/edit', name: 'app_page_edit', methods: ['GET', 'POST'])]
-    public function editPage(Request $request, Project $project, string $page_id, PageRepository $pageRepository, SerializerInterface $serializer, ManagerRegistry $doctrine, ProjectRepository $projectRepository): Response
-    {
-        $newPage = $serializer->deserialize(
-            $request->getContent(),
-            Page::class,
-            'json'
-        );
+    // #[Route('/{id}/page/{page_id}/edit', name: 'app_page_edit', methods: ['GET', 'POST'])]
+    // public function editPage(Request $request, Project $project, string $page_id, PageRepository $pageRepository, SerializerInterface $serializer, ManagerRegistry $doctrine, ProjectRepository $projectRepository): Response
+    // {
+    //     $newPage = $serializer->deserialize(
+    //         $request->getContent(),
+    //         Page::class,
+    //         'json'
+    //     );
         
-        if($page_id === 'new'){
-            $project->addPage($newPage);
-        }
-        else {
-            $oldPage = $project->getPages()->matching(Criteria::create()->where(Criteria::expr()->eq('id', $page->getId())))->get(0);
-            $oldPage->setFile($newPage->getFile());
-            $oldPage->setHeader($newPage->getHeader());
-            $oldPage->setProject($newPage->getProject());
-        }
-        $pageRepository->save($oldPage, true);
-        $projectRepository->save($project, true);
+    //     if($page_id === 'new'){
+    //         $project->addPage($newPage);
+    //     }
+    //     else {
+    //         $oldPage = $project->getPages()->matching(Criteria::create()->where(Criteria::expr()->eq('id', $page->getId())))->get(0);
+    //         $oldPage->setFile($newPage->getFile());
+    //         $oldPage->setHeader($newPage->getHeader());
+    //         $oldPage->setProject($newPage->getProject());
+    //     }
+    //     $pageRepository->save($oldPage, true);
+    //     $projectRepository->save($project, true);
 
 
-        return new JsonResponse([
-            'status' => '200',
-            //'new_id' => $field->getId()
-            ]
-        );
+    //     return new JsonResponse([
+    //         'status' => '200',
+    //         //'new_id' => $field->getId()
+    //         ]
+    //     );
 
 
 
@@ -283,7 +283,7 @@ class ProjectController extends AbstractController
         //     'status' => '200',
         //     ]
         // );
-    }
+    // }
 
 
 
