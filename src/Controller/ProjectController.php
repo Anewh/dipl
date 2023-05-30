@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Field;
+use App\Entity\Page;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Form\ProjectType;
 use App\Repository\FieldRepository;
+use App\Repository\PageRepository;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
@@ -72,7 +74,7 @@ class ProjectController extends AbstractController
             'json'
         );
 
-        
+        // dd($field);
         
         //$person = $serializer->deserialize($data, Person::class, 'xml')
         if($field_id === 'new'){
@@ -108,6 +110,82 @@ class ProjectController extends AbstractController
     }
 
 
+    // #[Route('/{id}/page/new', name: 'app_page_new', methods: [ 'GET', 'POST'])]
+    // public function newPage(Request $request, Project $project, PageRepository $pageRepository, ManagerRegistry $doctrine, NormalizerInterface $normalizer): Response
+    // {
+    //     $page = new Page();
+    //     $project->addPage($page);
+        
+
+    //     $entityManager = $doctrine->getManager();
+    //     $context = (new ObjectNormalizerContextBuilder())
+    //         ->withGroups(['pageShow'])
+    //         ->withSkipNullValues(true)
+    //         ->toArray();
+
+        
+    //     return $this->render('page/show.html.twig', [
+    //         'pageData' => $normalizer->normalize($page, null, $context),//$project
+    //         'page' => $page,
+    //         'projectId' => $page->getProject()->getId()
+    //     ]);
+    // }
+
+
+
+    // #[Route('/{id}/pages', name: 'app_field_edit', methods: ['GET', 'POST'])]
+    // public function newPage(Request $request, Project $project, PageRepository $pageRepository, SerializerInterface $serializer, ProjectRepository $projectRepository): Response
+    // {
+    //     $parent = $serializer->deserialize(
+    //         $request->getContent(),
+    //         Page::class,
+    //         'json'
+    //     );
+
+
+    //     $page = (new Page())->setParent($parent);
+        
+    //     $project->addPage($page);
+    //     $projectRepository->save($project, true);
+        
+    //     // //$person = $serializer->deserialize($data, Person::class, 'xml')
+    //     // if($field_id === 'new'){
+    //     //     $project->addField($field);
+    //     // }
+    //     // else {
+    //     //     $oldField = $project->getFields()->matching(
+    //     //         Criteria::create()
+    //     //         ->where(Criteria::expr()->eq('id', $field_id))
+    //     //     )->get(0);
+
+    //     //     $project->removeField($oldField);
+    //     //     $project->addField($field);
+    //     // }
+        
+
+
+    //     return new JsonResponse([
+    //         'status' => '200',
+    //         'page' => $page
+    //         // 'new_id' => $field->getId()
+    //         ]
+    //     );
+    //     // if ($form->isSubmitted() && $form->isValid()) {
+    //     //     $fieldRepository->save($field, true);
+
+    //     //     return $this->redirectToRoute('app_field_index', [], Response::HTTP_SEE_OTHER);
+    //     // }
+
+    //     // return $this->renderForm('field/edit.html.twig', [
+    //     //     'field' => $field,
+    //     //     'form' => $form,
+    //     // ]);
+    // }
+
+
+
+
+
 
     #[Route('/{id}/field/{field_id}/delete', name: 'app_field_delete', methods: ['POST'])]
     public function deleteField(Request $request, Project $project, string $field_id, FieldRepository $fieldRepository, SerializerInterface $serializer, ProjectRepository $projectRepository): Response
@@ -138,7 +216,7 @@ class ProjectController extends AbstractController
 
         return $this->render('project/show.html.twig', [
             'projectData' => $normalizer->normalize($project, null, $context),//$project
-            'project' => $project
+            'project' => $project,
         ]);
     }
 
@@ -159,6 +237,55 @@ class ProjectController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/{id}/page/{page_id}/edit', name: 'app_page_edit', methods: ['GET', 'POST'])]
+    public function editPage(Request $request, Project $project, string $page_id, PageRepository $pageRepository, SerializerInterface $serializer, ManagerRegistry $doctrine, ProjectRepository $projectRepository): Response
+    {
+        $newPage = $serializer->deserialize(
+            $request->getContent(),
+            Page::class,
+            'json'
+        );
+        
+        if($page_id === 'new'){
+            $project->addPage($newPage);
+        }
+        else {
+            $oldPage = $project->getPages()->matching(Criteria::create()->where(Criteria::expr()->eq('id', $page->getId())))->get(0);
+            $oldPage->setFile($newPage->getFile());
+            $oldPage->setHeader($newPage->getHeader());
+            $oldPage->setProject($newPage->getProject());
+        }
+        $pageRepository->save($oldPage, true);
+        $projectRepository->save($project, true);
+
+
+        return new JsonResponse([
+            'status' => '200',
+            //'new_id' => $field->getId()
+            ]
+        );
+
+
+
+
+        // $project = $page->getProject();
+
+        // //$project->removePage($project->getPages()->matching(Criteria::create()->where(Criteria::expr()->eq('id', $page->getId())))->get(0));
+        // $oldPage = $project->getPages()->matching(Criteria::create()->where(Criteria::expr()->eq('id', $page->getId())))->get(0);
+        // $oldPage->setFile($newPage->getFile());
+        // $oldPage->setHeader($newPage->getHeader());
+        // $oldPage->setProject($newPage->getProject());
+
+        // $pageRepository->save($oldPage, true);
+
+        // return new JsonResponse([
+        //     'status' => '200',
+        //     ]
+        // );
+    }
+
+
 
     #[Route('/{id}', name: 'app_project_delete', methods: ['POST'])]
     public function delete(Request $request, Project $project, ProjectRepository $projectRepository): Response

@@ -12,6 +12,6 @@
 
     {# <a href="{{ path('app_page_edit', {'id': page.id}) }}">edit</a> #}
 
-    {{ include('page/_delete_form.html.twig') }}
+    {% if pageData.id is defined %} {{ include('page/_delete_form.html.twig') }} {% endif %}
     </div>
 {% endblock %}

@@ -33,6 +33,7 @@ class Project
     private Collection $Teams;
 
     #[ORM\OneToMany(mappedBy: 'project', targetEntity: Page::class)]
+    #[Groups(['projectShow'])]
     
     private Collection $pages;
 

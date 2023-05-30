@@ -16,11 +16,12 @@ class Page
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['pageShow'])]
+    #[Groups(['pageShow', 'projectShow'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['pageShow'])]
+    #[Groups(['pageShow', 'projectShow'])]
+    
     private ?string $file = null;
 
     #[ORM\ManyToOne(inversedBy: 'pages')]
@@ -29,20 +30,20 @@ class Page
     private ?Project $project = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['pageShow'])]
+    #[Groups(['pageShow', 'projectShow'])]
     private ?string $relation = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'pages')]
-    #[Groups(['pageShow'])]
+    #[Groups(['pageShow', 'projectShow'])]
     private ?self $parent = null;
 
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
-    #[Groups(['pageShow'])]
+    #[Groups(['pageShow', 'projectShow'])]
     private Collection $pages;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['pageShow'])]
+    #[Groups(['pageShow', 'projectShow'])]
     private ?string $header = null;
 
 

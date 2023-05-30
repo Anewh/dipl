@@ -60,7 +60,15 @@
 					<nav class="nav nav-pills flex-column">
 					{% for page in project.pages %}
 						<a class="nav-link" href="{{ path('app_page_show', {'id': page.id}) }}">{{ page.header }}</a>
+						   {# <a href="{{ path('app_page_edit', {'id': page.id}) }}">edit</a> #}
+    						{# {{ include('page/_delete_form.html.twig') }} #}
 					{% endfor %}
+						<a href="{{ path('app_page_new') }}">Create new</a>
+						{# <a href="{{ path('app_page_edit', {'id': project.id , 'page_id': 'new'}) }}">Create new </a> #}
+						{# <a href="{{ path('app_page_new') }}">Create new</a> #}
+						
+					{# <div {{ vue_component('PageListComponent', { 'pagesData': projectData.pages } ) }}></div> #}
+				
 						{# <a class="nav-link" href="#item-1">Item 1</a>
 						<nav class="nav nav-pills flex-column">
 							<a class="nav-link ms-3 my-1" href="#item-1-1">Item 1-1</a>

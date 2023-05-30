@@ -14,6 +14,7 @@ class PageType extends AbstractType
         $builder
             ->add('file')
             ->add('project')
+            ->add('header')
         ;
     }
 

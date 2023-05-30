@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Page;
+use App\Entity\Project;
 use App\Form\PageType;
 use App\Repository\PageRepository;
 use Doctrine\Common\Collections\Criteria;
@@ -27,29 +28,58 @@ class PageController extends AbstractController
         ]);
     }
 
+    
     #[Route('/new', name: 'app_page_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PageRepository $pageRepository): Response
+    public function new(Request $request, PageRepository $pageRepository, SerializerInterface $serializer): Response
     {
         $page = new Page();
+
+        // dd($request->getContent());
+        // $newPage = $serializer->deserialize(
+        //     $request->getContent(),
+        //     Page::class,
+        //     'json'
+        // );
+
+       // dd($page);
         $form = $this->createForm(PageType::class, $page);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $pageRepository->save($page, true);
 
-            return $this->redirectToRoute('app_page_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_project_show', ['id'=>$page->getProject()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('page/new.html.twig', [
             'page' => $page,
             'form' => $form,
         ]);
+
+
+
+        // $page = new Page();
+        // $form = $this->createForm(PageType::class, $page);
+        // $form->handleRequest($request);
+
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     $pageRepository->save($page, true);
+
+        //     return $this->redirectToRoute('app_page_index', [], Response::HTTP_SEE_OTHER);
+        // }
+
+        // return $this->renderForm('page/new.html.twig', [
+        //     'page' => $page,
+        //     'form' => $form,
+        // ]);
     }
+
 
     #[Route('/{id}', name: 'app_page_show', methods: ['GET'])]
     public function show(Page $page, ManagerRegistry $doctrine, NormalizerInterface $normalizer): Response
     {
 
+        // dd($page);
         $entityManager = $doctrine->getManager();
         $context = (new ObjectNormalizerContextBuilder())
             ->withGroups(['pageShow'])
@@ -66,27 +96,22 @@ class PageController extends AbstractController
     
     
     #[Route('/{id}/edit', name: 'app_page_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Page $page, PageRepository $pageRepository,SerializerInterface $serializer, ManagerRegistry $doctrine): Response
+    public function edit(Request $request, Page $page, PageRepository $pageRepository, SerializerInterface $serializer, ManagerRegistry $doctrine): Response
     {
-        // dd($page);
-        // $newPage = ($request->getContent());
-        //dd($newPage);
-
         $newPage = $serializer->deserialize(
             $request->getContent(),
             Page::class,
             'json'
         );
-
-        $project = $page->getProject();
-
-
         
+        $project = $page->getProject();
 
         //$project->removePage($project->getPages()->matching(Criteria::create()->where(Criteria::expr()->eq('id', $page->getId())))->get(0));
         $oldPage = $project->getPages()->matching(Criteria::create()->where(Criteria::expr()->eq('id', $page->getId())))->get(0);
         $oldPage->setFile($newPage->getFile());
         $oldPage->setHeader($newPage->getHeader());
+        
+        $oldPage->setProject($newPage->getProject());
 
         $pageRepository->save($oldPage, true);
 
@@ -94,37 +119,6 @@ class PageController extends AbstractController
             'status' => '200',
             ]
         );
-
-        //$oldPage->
-        //$entityManager = $doctrine->getManager();
-        //$projectRepository = $entityManager->getRepository(User::class)->findOneByPage($page);
-
-        
-        //dd($page);
-        //$projectRepository->save($project, true);     
-        
-
-        // return new JsonResponse([
-        //     'status' => 'deleted',
-        //     'id' => $field_id
-        //     ]
-        // );
-
-
-
-        // $form = $this->createForm(PageType::class, $page);
-        // $form->handleRequest($request);
-
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     $pageRepository->save($page, true);
-
-        //     return $this->redirectToRoute('app_page_index', [], Response::HTTP_SEE_OTHER);
-        // }
-
-        // return $this->renderForm('page/edit.html.twig', [
-        //     'page' => $page,
-        //     'form' => $form,
-        // ]);
     }
 
     #[Route('/{id}', name: 'app_page_delete', methods: ['POST'])]

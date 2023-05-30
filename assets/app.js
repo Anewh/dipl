@@ -16,6 +16,9 @@ import 'bootstrap/js/dist/dropdown';
 import './bootstrap';
 import { registerVueControllerComponents } from '@symfony/ux-vue';
 
+import ContextMenu from 'add-context-menu'
+import ContextMenuItem from 'add-context-menu'
+
 registerVueControllerComponents(require.context('./components', true, /\.vue$/));
 
 
