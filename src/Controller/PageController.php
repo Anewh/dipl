@@ -5,13 +5,16 @@ namespace App\Controller;
 use App\Entity\Page;
 use App\Form\PageType;
 use App\Repository\PageRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/page')]
 class PageController extends AbstractController
@@ -56,43 +59,72 @@ class PageController extends AbstractController
         return $this->render('page/show.html.twig', [
             'pageData' => $normalizer->normalize($page, null, $context),//$project
             'page' => $page,
+            'projectId' => $page->getProject()->getId()
         ]);
     }
 
-
-    // #[Route('/{id}', name: 'app_project_show', methods: ['GET'])]
-    // public function show(Project $project, ManagerRegistry $doctrine, NormalizerInterface $normalizer): Response
-    // {
-    //     $entityManager = $doctrine->getManager();
-    //     $context = (new ObjectNormalizerContextBuilder())
-    //         ->withGroups(['projectShow'])
-    //         ->withSkipNullValues(true)
-    //         ->toArray();
-
-    //     return $this->render('project/show.html.twig', [
-    //         'projectData' => $normalizer->normalize($project, null, $context),//$project
-    //         'project' => $project
-    //     ]);
-    // }
-
-
-
+    
+    
     #[Route('/{id}/edit', name: 'app_page_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Page $page, PageRepository $pageRepository): Response
+    public function edit(Request $request, Page $page, PageRepository $pageRepository,SerializerInterface $serializer, ManagerRegistry $doctrine): Response
     {
-        $form = $this->createForm(PageType::class, $page);
-        $form->handleRequest($request);
+        // dd($page);
+        // $newPage = ($request->getContent());
+        //dd($newPage);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $pageRepository->save($page, true);
+        $newPage = $serializer->deserialize(
+            $request->getContent(),
+            Page::class,
+            'json'
+        );
 
-            return $this->redirectToRoute('app_page_index', [], Response::HTTP_SEE_OTHER);
-        }
+        $project = $page->getProject();
 
-        return $this->renderForm('page/edit.html.twig', [
-            'page' => $page,
-            'form' => $form,
-        ]);
+
+        
+
+        //$project->removePage($project->getPages()->matching(Criteria::create()->where(Criteria::expr()->eq('id', $page->getId())))->get(0));
+        $oldPage = $project->getPages()->matching(Criteria::create()->where(Criteria::expr()->eq('id', $page->getId())))->get(0);
+        $oldPage->setFile($newPage->getFile());
+        $oldPage->setHeader($newPage->getHeader());
+
+        $pageRepository->save($oldPage, true);
+
+        return new JsonResponse([
+            'status' => '200',
+            ]
+        );
+
+        //$oldPage->
+        //$entityManager = $doctrine->getManager();
+        //$projectRepository = $entityManager->getRepository(User::class)->findOneByPage($page);
+
+        
+        //dd($page);
+        //$projectRepository->save($project, true);     
+        
+
+        // return new JsonResponse([
+        //     'status' => 'deleted',
+        //     'id' => $field_id
+        //     ]
+        // );
+
+
+
+        // $form = $this->createForm(PageType::class, $page);
+        // $form->handleRequest($request);
+
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     $pageRepository->save($page, true);
+
+        //     return $this->redirectToRoute('app_page_index', [], Response::HTTP_SEE_OTHER);
+        // }
+
+        // return $this->renderForm('page/edit.html.twig', [
+        //     'page' => $page,
+        //     'form' => $form,
+        // ]);
     }
 
     #[Route('/{id}', name: 'app_page_delete', methods: ['POST'])]
