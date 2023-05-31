@@ -30,6 +30,12 @@ class Project
     private Collection $storage;
 
     #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'projects')]
+    /**
+     * @var ArrayCollection
+     * @ORM\ManyToMany(targetEntity="App\Entity\Team", cascade={"persist"})
+     * @ORM\JoinTable(name="project_team")
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=false)
+    */
     private Collection $Teams;
 
     #[ORM\OneToMany(mappedBy: 'project', targetEntity: Page::class)]

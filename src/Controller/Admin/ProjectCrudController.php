@@ -60,7 +60,7 @@ class ProjectCrudController extends AbstractCrudController
                     'by_reference' => false,
                 ]),
             AssociationField::new('pages')
-                ->setFormTypeOption('choice_label', 'сщтеу')
+                ->setFormTypeOption('choice_label', 'header')
                 ->setFormTypeOption('mapped', 'false')
                 ->setFormTypeOptions([
                     'by_reference' => false,

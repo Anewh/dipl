@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230523171728 extends AbstractMigration
+final class Version20230531105821 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -28,7 +28,7 @@ final class Version20230523171728 extends AbstractMigration
         $this->addSql('CREATE SEQUENCE "user_id_seq" INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE TABLE field (id INT NOT NULL, project_id INT DEFAULT NULL, header TEXT NOT NULL, content TEXT NOT NULL, type VARCHAR(255) NOT NULL, link_name VARCHAR(1024) DEFAULT NULL, link VARCHAR(1024) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_5BF54558166D1F9C ON field (project_id)');
-        $this->addSql('CREATE TABLE page (id INT NOT NULL, project_id INT NOT NULL, parent_id INT DEFAULT NULL, file TEXT NOT NULL, relation VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE page (id INT NOT NULL, project_id INT NOT NULL, parent_id INT DEFAULT NULL, file TEXT NOT NULL, header VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_140AB620166D1F9C ON page (project_id)');
         $this->addSql('CREATE INDEX IDX_140AB620727ACA70 ON page (parent_id)');
         $this->addSql('CREATE TABLE project (id INT NOT NULL, full_name VARCHAR(255) NOT NULL, code_name VARCHAR(255) NOT NULL, type VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
@@ -38,10 +38,10 @@ final class Version20230523171728 extends AbstractMigration
         $this->addSql('CREATE TABLE project_user (project_id INT NOT NULL, user_id INT NOT NULL, PRIMARY KEY(project_id, user_id))');
         $this->addSql('CREATE INDEX IDX_B4021E51166D1F9C ON project_user (project_id)');
         $this->addSql('CREATE INDEX IDX_B4021E51A76ED395 ON project_user (user_id)');
-        $this->addSql('CREATE TABLE storage (id INT NOT NULL, project_id INT DEFAULT NULL, link TEXT NOT NULL, description TEXT DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE storage (id INT NOT NULL, project_id INT DEFAULT NULL, link TEXT NOT NULL, description TEXT DEFAULT NULL, author VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_547A1B34166D1F9C ON storage (project_id)');
         $this->addSql('CREATE TABLE team (id INT NOT NULL, name VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE TABLE "user" (id INT NOT NULL, team_id INT DEFAULT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, phone VARCHAR(255) NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, github_name VARCHAR(255) DEFAULT NULL, token VARCHAR(1024) DEFAULT NULL, position VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE "user" (id INT NOT NULL, team_id INT DEFAULT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) DEFAULT NULL, phone VARCHAR(255) NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, githubname VARCHAR(255) DEFAULT NULL, token VARCHAR(1024) DEFAULT NULL, position VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649E7927C74 ON "user" (email)');
         $this->addSql('CREATE INDEX IDX_8D93D649296CD8AE ON "user" (team_id)');
         $this->addSql('CREATE TABLE messenger_messages (id BIGSERIAL NOT NULL, body TEXT NOT NULL, headers TEXT NOT NULL, queue_name VARCHAR(190) NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, available_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, delivered_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY(id))');

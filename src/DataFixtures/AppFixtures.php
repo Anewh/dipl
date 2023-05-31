@@ -40,16 +40,16 @@ class AppFixtures extends Fixture
             'roles' => ['ROLE_ADMIN'],
             'email' => 'again@example.com',
             'password' => 'password',
-            'lastname' => 'Холин',
-            'firstname' => 'Владимир',
-            'githubName' => 'Terqaz',
+            'lastname' => 'Миладзе',
+            'firstname' => 'Валерий',
+            'githubName' => 'Anewh',
             'token' => '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'
         ]
     ];
 
     const STORAGE = [
-        'description' => 'Диплом и работа с ботами',
-        'link' => 'diplom_app'
+        'description' => 'Проект по практике ',
+        'link' => 'IntaroPracticeProject'
     ];
     const PROJECTS = [
         [
@@ -226,7 +226,8 @@ class AppFixtures extends Fixture
 
         $storage = (new Storage())
         ->setDescription(self::STORAGE['description'])
-        ->setLink(self::STORAGE['link']);
+        ->setLink(self::STORAGE['link'])
+        ->setAuthor('GrishaginEvgeny');
 
         $fields = [];
 

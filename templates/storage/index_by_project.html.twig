@@ -5,10 +5,10 @@
 {% block body %}
     <h1>Storages by project</h1>
     <div class="container">
-    {{ render_chart(chart) }}
-
-{# You can pass HTML attributes as a second argument to add them on the <canvas> tag #}
-    {{ render_chart(chart, {'class': 'my-chart'}) }}
+    
+        {{ render_chart(chart,  {'width': 500, 'height': 500}) }}
+        {# You can pass HTML attributes as a second argument to add them on the <canvas> tag #}
+        {# {{ render_chart(chart, {'class': 'container'}) }} #}
     </div>
 
     {# <table class="table">
@@ -39,5 +39,5 @@
         </tbody>
     </table> #}
 
-    <a href="{{ path('app_storage_new') }}">Create new</a>
+    {# <a href="{{ path('app_storage_new') }}">Create new</a> #}
 {% endblock %}

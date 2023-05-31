@@ -17,6 +17,12 @@ class Team
     private ?int $id = null;
 
     #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'Teams')]
+    /**
+     * @var ArrayCollection
+     * @ORM\ManyToMany(targetEntity="App\Entity\Project", cascade={"persist"})
+     * @ORM\JoinTable(name="project_team")
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=false)
+    */
     private Collection $projects;
 
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: User::class)]

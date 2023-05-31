@@ -23,6 +23,9 @@ class Storage
     #[ORM\ManyToOne(inversedBy: 'storage')]
     private ?Project $project = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $author = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -72,5 +75,17 @@ class Storage
     public function __toString(): string
     {
         return $this->getLink();
+    }
+
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(string $author): self
+    {
+        $this->author = $author;
+
+        return $this;
     }
 }

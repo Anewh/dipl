@@ -29,9 +29,9 @@ class Page
     #[Groups(['pageShow'])]
     private ?Project $project = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['pageShow', 'projectShow'])]
-    private ?string $relation = null;
+    // #[ORM\Column(length: 255, nullable: true)]
+    // #[Groups(['pageShow', 'projectShow'])]
+    // private ?string $relation = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'pages')]
     #[Groups(['pageShow', 'projectShow'])]

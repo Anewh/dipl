@@ -22,6 +22,7 @@ class StorageCrudController extends AbstractCrudController
             // IdField::new('id'),
 
             TextField::new('link'),
+            TextField::new('author'),
             TextEditorField::new('description'),
             AssociationField::new('project')
                 ->setFormTypeOption('choice_label', 'fullName')
