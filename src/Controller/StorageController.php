@@ -31,13 +31,14 @@ class StorageController extends AbstractController
         $chart = [];
 
         foreach($projects as $project){
-            array_push($chart, $githubService->getAccumulatedData($project,  $user));
+            array_push($chart, ['graph' => $githubService->getAccumulatedData($project,  $user), 'project' => $project]);
         }
 
-        dd($chart);
+        //dd($projects);
 
         return $this->render('storage/index.html.twig', [
-            'chart' => $chart,
+            'charts' => $chart,
+            //'projects' => $projects
         ]);
     }
 

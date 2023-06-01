@@ -17,7 +17,7 @@ use Symfony\UX\Chartjs\Model\Chart;
 
 class GithubService
 {
-    private const DATE_FORMAT = 'Y-m-d';
+    private const COLORS = ['(0,255,127)', '(46,139,87)', '(255,165,0)', '(255,215,0)', '(184,134,11)', '(218,165,32)', '(238,232,170)', '(189,183,107)', '(240,230,140)', '(128,128,0)', '(255,255,0)', '(154,205,50)', '(85,107,47)', '(107,142,35)', '(124,252,0)', '(127,255,0)', '(102,205,170)', '(60,179,113)', '(32,178,170)', '(47,79,79)', '(0,128,128)', '(0,139,139)'];
     private ChartBuilderInterface $chartBuilder;
 
     public function __construct(ChartBuilderInterface $chartBuilder, EntityManagerInterface $em)
@@ -32,7 +32,8 @@ class GithubService
     // TODO поправить кривые названия в сущностях
 
     // Получить данные о всех репозиториях проекта по всем веткам, отдельно по репозиторию, отдельно по каждой ветке 
-    public function getAccumulatedData($project, $user){
+    public function getAccumulatedData($project, $user)
+    {
         $chartProject = $this->getProjectDataset($project, $user);
         $storages = $project->getStorage();
 
@@ -43,10 +44,10 @@ class GithubService
         $client->authenticate($user->getToken(), null, \Github\AuthMethod::ACCESS_TOKEN);
 
 
-        foreach($storages as $storage){
+        foreach ($storages as $storage) {
             array_push($chartStorages, $this->getStorageDataset($storage, $user));
             $branches = $client->api('repo')->branches($storage->getAuthor(), $storage->getLink());
-            foreach($branches as $branch){
+            foreach ($branches as $branch) {
                 array_push($chartBranches, $this->getBrancheDataset($storage, $branch['name'], $user));
             }
         }
@@ -116,9 +117,9 @@ class GithubService
             'labels' => $labels,
             'datasets' => [
                 [
-                    'label' => 'symfony',
-                    'backgroundColor' => 'rgb(255, 99, 132)',
-                    'borderColor' => 'rgb(255, 99, 132)',
+                    'label' => $project->getFullname(),
+                    'backgroundColor' => 'rgba(159,170,174,0.7)',
+                    'borderColor' => 'rgb(95,158,160)',
                     'data' => $dataset,
                 ],
             ],
@@ -131,7 +132,17 @@ class GithubService
                     'suggestedMax' => max($dataset),
                 ],
             ],
+            // 'plugins' => [
+            //     'legend' => [
+            //         'position' => 'top'
+            //     ],
+            //     'title' => [
+            //         'display' => 'true',
+            //         'text' => $project->getFullname()
+            //     ]
+            // ]
         ]);
+
 
         return $chart;
     }
@@ -174,9 +185,9 @@ class GithubService
             'labels' => $labels,
             'datasets' => [
                 [
-                    'label' => 'symfony',
-                    'backgroundColor' => 'rgb(255, 99, 132)',
-                    'borderColor' => 'rgb(255, 99, 132)',
+                    'label' => $storage->getLink(),
+                    'backgroundColor' => 'rgba(75,0,130, 0.5)',
+                    'borderColor' => 'rgba((147,112,219, 0.6)',
                     'data' => $dataset,
                 ],
             ],
@@ -212,22 +223,32 @@ class GithubService
         }
 
         // активность по всем веткам всех репозиториев проекта
-        $chart = $this->chartBuilder->createChart(Chart::TYPE_RADAR);
+        $chart = $this->chartBuilder->createChart(Chart::TYPE_PIE);
         $data = (array_count_values($authors));
 
         $labels = [];
         $dataset = [];
+        $backgroundColors = [];
+
+        $i = 0;
         foreach ($data as $key => $d) {
             array_push($labels, $key);
             array_push($dataset, $d);
+            array_push($backgroundColors, 'rgb' . self::COLORS[$i++]);
+            //$colorIndex = 
         }
+
+        //const colorIndex = i % Object.keys(Utils.CHART_COLORS).length;
+
+        //newDataset.backgroundColor.push(Object.values(Utils.CHART_COLORS)[colorIndex]);
+
 
         $chart->setData([
             'labels' => $labels,
             'datasets' => [
                 [
                     'label' => 'symfony',
-                    'backgroundColor' => 'rgb(255, 99, 132)',
+                    'backgroundColor' => $backgroundColors,//'rgb(255, 99, 132)',
                     'borderColor' => 'rgb(255, 99, 132)',
                     'data' => $dataset,
                 ],
@@ -241,14 +262,19 @@ class GithubService
                     'suggestedMax' => max($dataset),
                 ],
             ],
+            'plugins' => [
+                'legend' => [
+                    'position' => 'top'
+                ],
+                'title' => [
+                    'display' => 'true',
+                    'text' => $sha
+                ]
+            ]
         ]);
 
         return $chart;
     }
 
-    public function getRenderData()
-    {
-
+    
     }
-
-}
