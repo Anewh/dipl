@@ -6,6 +6,7 @@
 
 <div class="container">
     <div class='h2 mb-2'> {{ page.project.fullName}} </div>
+    <a class="btn btn-outline-secondary mb-2" href="{{ path('app_project_show', {'id': page.project.id}) }}">Вернуться</a>
     <div {{ vue_component('MdPageComponent', { 'pageData': pageData, 'projectIdData': projectId} ) }}></div>
     
     {# <a href="{{ path('app_page_index') }}">back to list</a> #}
