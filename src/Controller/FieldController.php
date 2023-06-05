@@ -10,12 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
 
 #[Route('/field')]
 class FieldController extends AbstractController
 {
     #[Route('/', name: 'app_field_index', methods: ['GET'])]
-    public function index(FieldRepository $fieldRepository): Response
+    public function index(FieldRepository $fieldRepository, ChartBuilderInterface $chartBuilder): Response
     {
         return $this->render('field/index.html.twig', [
             'fields' => $fieldRepository->findAll(),

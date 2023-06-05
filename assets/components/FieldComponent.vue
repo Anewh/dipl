@@ -8,7 +8,7 @@
                     <h5 class="card-title d-inline m-0 me-auto">{{ header }}</h5>
 
                     
-                    <div class="btn-group ms-2">
+            <div class="btn-group ms-2" v-if="isEditor==true">
                 <button type="button" class="btn btn btn-outline-danger">
                     <a @click="deleteCard"><i class="bi bi-trash3 text-dark"></i></a>
                   <span class="visually-hidden">Button</span>
@@ -21,7 +21,7 @@
                 </div>
                 <p class="card-text"> {{ content }} </p>
                 <p class="card-text">
-                    <small class="text-body-secondary"> {{ link }} </small>
+                    <p><a :href='link' class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ link_name }}</a></p>
                 </p>
             </div>
             <div v-else-if="status==='edit'">
@@ -84,13 +84,17 @@ export default {
         },
         projectId: {
             type: String
+        },
+        isEditor: {
+            type: Boolean
         }
 
     },
     data() {
         return {
             status: this.id=='new'?'edit':'show',
-            errorMsg: ''
+            errorMsg: '',
+            
         }
     },
     methods: {

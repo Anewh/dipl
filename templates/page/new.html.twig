@@ -1,11 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Page{% endblock %}
+{% block title %}New Page
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Page</h1>
-
-    {{ include('page/_form.html.twig') }}
-
-    <a href="{{ path('app_page_index') }}">back to list</a>
+	<div class="container">
+		<div class='h2 mb-2 text-center'>
+			Добавление страницы
+		</div>
+		<div class="needs-validation" novalidate="">
+			<div class="py-5 text-center w-50 m-auto">
+				{{ include('page/_form.html.twig') }}
+			</div>
+		</div>
+	</div>
 {% endblock %}

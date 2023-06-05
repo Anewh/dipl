@@ -43,6 +43,37 @@ class StorageController extends AbstractController
     }
 
 
+
+
+    #[Route('/{projectId}', name: 'app_storage_index_by_project', methods: ['GET'])]
+    public function indexByProject(StorageRepository $storageRepository, string $projectId, GithubService $githubService,  ManagerRegistry $doctrine): Response
+    {
+
+        /** @var ?User $user */
+        $user = $this->getUser();
+        //$team = $user->getTeam();
+        //$doctrine->\
+        $entityManager = $doctrine->getManager();
+        $project = $entityManager->getRepository(Project::class)->findOneById($projectId);
+        //$projects = $team->getProjects()->toArray();
+
+        $chart = ['graph' => $githubService->getAccumulatedData($project,  $user), 'project' => $project];
+
+        // foreach($projects as $project){
+        //     array_push($chart, ['graph' => $githubService->getAccumulatedData($project,  $user), 'project' => $project]);
+        // }
+
+        //dd($projects);
+
+        //dd($chart);
+
+        return $this->render('storage/index_by_project.html.twig', [
+            'chart' => $chart,
+            //'projects' => $projects
+        ]);
+    }
+
+
     #[Route('/new', name: 'app_storage_new', methods: ['GET', 'POST'])]
     public function new(Request $request, StorageRepository $storageRepository): Response
     {

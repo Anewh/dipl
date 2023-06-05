@@ -13,20 +13,22 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
 use Symfony\Component\Security\Http\ParameterBagUtils;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LoginController extends AbstractController
 {
     #[Route('/login', name: 'app_login')]
-    public function index(AuthenticationUtils $authenticationUtils): Response
+    public function index(AuthenticationUtils $authenticationUtils, TranslatorInterface $translator): Response
     {
         // return $this->render('login/index.html.twig', [
         //     'controller_name' => 'LoginController',
         // ]);
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-
+        
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        
           return $this->render('login/index.html.twig', [
 
              'last_username' => $lastUsername,

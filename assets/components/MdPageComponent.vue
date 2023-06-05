@@ -1,29 +1,26 @@
 <template>
-    
-        
-        <div class="mb-3">
+    <div class="mb-3">
         <div class="input-group input-group-sm mb-1">
             <span class="input-group-text"> Заголовок </span>
 
-            <input
-                   v-model="header"
-                   class="form-control"
-                   placeholder="заголовок страницы"
-                   >
-                   
-                </div>
-            </div>    
+            <div v-if="isEditor == true">
+                <input v-model="header" class="form-control" placeholder="заголовок страницы">
+            </div>
+            <div v-else>
+                <input v-model="header" class="form-control" placeholder="заголовок страницы" disabled>
+            </div>
+        </div>
+    </div>
 
 
-        <!-- <InputField :modelValue="page.header" @update:modelValue="$emit('update:page.header', $event)" type="text" -->
-                        <!-- label="Заголовок" placeholder='Заголовок страницы' /> -->
+    <!-- <InputField :modelValue="page.header" @update:modelValue="$emit('update:page.header', $event)" type="text" -->
+    <!-- label="Заголовок" placeholder='Заголовок страницы' /> -->
 
-        <!-- <input v-model="header" placeholder="отредактируй меня"> -->
-        <!-- <p>Введённое сообщение: {{ header }}</p> -->
-        
-        
-        <MdEditor v-model="page.file" language="en-US" @onSave="onSave" noMermaid preview={false} />
-    
+    <!-- <input v-model="header" placeholder="отредактируй меня"> -->
+    <!-- <p>Введённое сообщение: {{ header }}</p> -->
+
+    <!-- :disabled='true'  -->
+    <MdEditor v-model="page.file" language="en-US" @onSave="onSave" noMermaid :disabled="!isEditor" />
 </template>
   
 <script>
@@ -41,8 +38,10 @@ export default {
         },
         projectIdData: {
             type: Number,
+        },
+        isEditor: {
+            type: Boolean,
         }
-        
     },
     data() {
         return {
@@ -53,14 +52,14 @@ export default {
     },
     methods: {
         onSave(v, h) {
-            
+            //console.log(this.isEditor);
             this.page.header = this.header;
-            console.log(this.page.header);
+            //console.log(this.page.header);
             //console.log(this.$props.header);
             h.then((html) => {
                 const body = structuredClone(this.page);
                 fetch(`/page/${this.page.id}/edit`, {
-                // fetch(`/${this.page.project.id}/page/${this.page.id}/edit`, {
+                    // fetch(`/${this.page.project.id}/page/${this.page.id}/edit`, {
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: { 'Content-Type': 'application/json' }

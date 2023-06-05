@@ -9,7 +9,7 @@
 		{% for chart in charts %}
 			{# тут выводится инфа по всему проекту #}
 			<div class="my-3 p-3 bg-body rounded shadow-sm">
-			<h6 class="border-bottom pb-2 mb-0">Проекты</h6>
+				<h6 class="border-bottom pb-2 mb-0">Проекты</h6>
 				<div class="d-flex text-body-secondary pt-3">
 					<svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveaspectratio="xMidYMid slice" focusable="false">
 						<title>Placeholder</title>
@@ -20,14 +20,13 @@
 						<div class="d-flex justify-content-between">
 							<strong class="text-gray-dark">
 								{{ chart.project.fullName}}</strong>
-							
+
 						</div>
 						<span class="d-block">
 							{{ chart.project.type}}</span>
 					</div>
 				</div>
-		</div>
-			{# <h6 class="border-bottom pb-2 mb-0">{{ project.fullname }}</h6> #}
+			</div>
 			<div class="row mb-2">
 				<div class="col-md-6">
 					<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -43,8 +42,8 @@
 				<h6 class="border-bottom pb-2 mb-0">Репозитории</h6>
 			</div>
 
-			{% for storage in chart.graph.chartStorages %}
-				<div class="row mb-2">
+			<div class="row mb-2">
+				{% for storage in chart.graph.chartStorages %}
 					<div class="col-md-6">
 						<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 							<div class="col p-4 d-flex flex-column position-static">
@@ -52,8 +51,8 @@
 							</div>
 						</div>
 					</div>
-				</div>
-			{% endfor %}
+				{% endfor %}
+			</div>
 
 			{# тут выводится инфа по всем веткам каждого репозитория #}
 			<div class="my-3 p-3 bg-body rounded shadow-sm">
@@ -76,7 +75,7 @@
 
 		{% endfor %}
 
-		
+
 	</div>
 {% endblock %}
 

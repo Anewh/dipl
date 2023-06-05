@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Field;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -17,7 +18,6 @@ class FieldCrudController extends AbstractCrudController
     {
         return Field::class;
     }
-
     
     public function configureFields(string $pageName): iterable
     {
@@ -29,18 +29,13 @@ class FieldCrudController extends AbstractCrudController
             //AssociationField::new('project')->setCrudController(ProjectCrudController::class)
         ];
     }
+    
 
-    public static function getSubscribedEvents()
-    {
-        return [
-            BeforeEntityPersistedEvent::class => ['setBlogPostSlug'],
-        ];
-    }
 
     public function setBlogPostSlug(BeforeEntityPersistedEvent $event)
     {
         $entity = $event->getEntityInstance();
-        dd($entity);
+        //dd($entity);
     }
     
     

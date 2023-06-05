@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
@@ -41,11 +42,24 @@ class RegistrationFormType extends AbstractType
                     'label' => 'Повторите пароль',
                 ],
             ])
-            ->add('phone')
-            ->add('firstname')
-            ->add('lastname')
-            ->add('githubName')
-            ->add('position')
+            ->add('phone', TextType::class, [
+                'label' => 'Телефон',
+            ])
+            ->add('firstname', TextType::class, [
+                'label' => 'Имя',
+            ])
+            ->add('lastname', TextType::class, [
+                'label' => 'Фамилия',
+            ])
+            ->add('githubName', TextType::class, [
+                'label' => 'Github имя',
+            ])
+            ->add('position', TextType::class, [
+                'label' => 'Должность',
+                'constraints' => [
+                    new NotBlank(message: 'Укажите телефон'),
+                ],
+            ])
             ;
     }
 

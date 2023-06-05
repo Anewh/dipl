@@ -3,6 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -35,50 +38,86 @@ class UserCrudController extends AbstractCrudController
         return User::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+        ->setEntityLabelInSingular('Пользователь')
+        ->setEntityLabelInPlural('Пользователи')
+        ->setPageTitle('index', 'Пользователи')
+        ->setPageTitle('new', 'Добавление пользователя')
+        ->setPageTitle('edit', 'Изменить пользователя')
+        ;
+    }
 
-    // public function configureFields(string $pageName): iterable
-    // {
-    //     return [
-    //         TextField::new('firstname'),
-    //         TextField::new('lastname'),
-    //         TextField::new(''),
-    //         EmailField::new('email'),
-
-    //         // IdField::new('id'),
-    //         // TextField::new('title'),
-    //         // TextEditorField::new('description'),
-    //     ];
-    // }
-
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->update(Crud::PAGE_INDEX, Action::EDIT, function(Action $action) {
+                return $action
+                    ->setLabel('Изменить');
+            })
+            ->update(Crud::PAGE_INDEX, Action::NEW, function(Action $action) {
+                return $action
+                    ->setLabel('Добавить');
+            })
+            ->update(Crud::PAGE_INDEX, Action::DELETE, function(Action $action) {
+                return $action
+                    ->setLabel('Удалить');
+            })
+            ->update(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE, function(Action $action) {
+                return $action
+                    ->setLabel('Сохранить и продолжить редактирование');
+            })
+            ->update(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN, function(Action $action) {
+                return $action
+                    ->setLabel('Сохранить и вернуться на главную');
+            })
+            ->update(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER, function(Action $action) {
+                return $action
+                    ->setLabel('Сохранить и добавить еще');
+            })
+            ->update(Crud::PAGE_NEW, Action::SAVE_AND_RETURN, function(Action $action) {
+                return $action
+                    ->setLabel('Сохранить и вернуться на главную');
+            })
+        ;
+    }
 
 
 
     public function configureFields(string $pageName): iterable
     {
-        $roles = ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_USER'];
+        // $rolesLabels = ['Просмотр', 'Администрирование', 'Редактирование'];
+        // $roles = ['ROLE_OWNER', 'ROLE_ADMIN', 'ROLE_USER'];
+
+
+        $rolesLabels = ['Просмотр', 'Администрирование', 'Редактирование'];
+        $roles = ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_DEV'];
         return [
             FormField::addPanel('User data')->setIcon('fa fa-user'),
             EmailField::new('email')->onlyWhenUpdating()->setDisabled(),
-            EmailField::new('email')->onlyWhenCreating(),
-            TextField::new('email')->onlyOnIndex(),
-            TextField::new('firstname'),
-            TextField::new('lastname'),
-            TextField::new('phone'),
-            TextField::new('position'),
-            TextField::new('githubname'),
-            TextField::new('token'),
+            EmailField::new('email')->onlyWhenCreating()->setLabel('Почта'),
+            TextField::new('email')->onlyOnIndex()->setLabel('Почта'),
+            TextField::new('firstname')->setLabel('Имя'),
+            TextField::new('lastname')->setLabel('Фамилия'),
+            TextField::new('phone')->setLabel('Телефон'),
+            TextField::new('position')->setLabel('Должность'),
+            TextField::new('githubname')->setLabel('Github имя'),
+            TextField::new('token')->setLabel('Github токен'),
             
             ChoiceField::new('roles')
-                ->setChoices(array_combine($roles, $roles))
+                ->setLabel('Доступ к информации о проектах')
+                ->setChoices(array_combine($rolesLabels, $roles))
                 ->allowMultipleChoices()
                 ->renderAsBadges(),
+                
             FormField::addPanel('Change password')->setIcon('fa fa-key'),
             Field::new('password', 'New password')->onlyWhenCreating()->setRequired(true)
                 ->setFormType(RepeatedType::class)
                 ->setFormTypeOptions([
                     'type' => PasswordType::class,
-                    'first_options' => ['label' => 'New password'],
-                    'second_options' => ['label' => 'Repeat password'],
+                    'first_options' => ['label' => 'Пароль'],
+                    'second_options' => ['label' => 'Повторите пароль'],
                     'error_bubbling' => true,
                     'invalid_message' => 'The password fields do not match.',
                 ]),
@@ -86,8 +125,8 @@ class UserCrudController extends AbstractCrudController
                 ->setFormType(RepeatedType::class)
                 ->setFormTypeOptions([
                     'type' => PasswordType::class,
-                    'first_options' => ['label' => 'New password'],
-                    'second_options' => ['label' => 'Repeat password'],
+                    'first_options' => ['label' => 'Новый пароль'],
+                    'second_options' => ['label' => 'Повторите пароль'],
                     'error_bubbling' => true,
                     'invalid_message' => 'The password fields do not match.',
                     'empty_data' => ''

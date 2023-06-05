@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Page;
 use App\Entity\Project;
+use App\Entity\User;
 use App\Form\PageType;
 use App\Repository\PageRepository;
 use Doctrine\Common\Collections\Criteria;
@@ -29,8 +30,8 @@ class PageController extends AbstractController
     }
 
     
-    #[Route('/new', name: 'app_page_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PageRepository $pageRepository, SerializerInterface $serializer): Response
+    #[Route('/{projectId}/new', name: 'app_page_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, string $projectId, PageRepository $pageRepository, SerializerInterface $serializer): Response
     {
         $page = new Page();
 
@@ -42,7 +43,7 @@ class PageController extends AbstractController
         // );
 
        // dd($page);
-        $form = $this->createForm(PageType::class, $page);
+        $form = $this->createForm(PageType::class, $page, ['project_id' => intval($projectId) ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -86,10 +87,16 @@ class PageController extends AbstractController
             ->withSkipNullValues(true)
             ->toArray();
 
+        /** @var ?User $user */
+        $user = $this->getUser();
+
+        $isEditor = in_array('ROLE_DEV', $user->getRoles()) || in_array('ROLE_ADMIN', $user->getRoles());
+
         return $this->render('page/show.html.twig', [
             'pageData' => $normalizer->normalize($page, null, $context),//$project
             'page' => $page,
-            'projectId' => $page->getProject()->getId()
+            'projectId' => $page->getProject()->getId(),
+            'isEditor' => $isEditor
         ]);
     }
 

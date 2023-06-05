@@ -39,7 +39,7 @@ class Page
 
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
-    #[Groups(['pageShow', 'projectShow'])]
+    //#[Groups(['pageShow', 'projectShow'])]
     private Collection $pages;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -86,21 +86,22 @@ class Page
         return $this;
     }
 
-    public function getRelation(): ?string
-    {
-        return $this->relation;
-    }
+    // public function getRelation(): ?string
+    // {
+    //     return $this->relation;
+    // }
 
-    public function setRelation(string $relation): self
-    {
-        $this->relation = $relation;
+    // public function setRelation(string $relation): self
+    // {
+    //     $this->relation = $relation;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getParent(): ?int
+    public function getParent(): ?self
     {
-        return $this->parent?$this->parent->getId(): -1;
+        //return $this->parent?$this->parent->getId(): -1;
+        return $this->parent;
     }
 
     public function setParent(?self $parent): self
@@ -152,4 +153,8 @@ class Page
         return $this;
     }
     
+    public function __toString(): string
+    {
+        return $this->getHeader();
+    }
 }

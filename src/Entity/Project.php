@@ -34,7 +34,7 @@ class Project
      * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="App\Entity\Team", cascade={"persist"})
      * @ORM\JoinTable(name="project_team")
-     * @ORM\JoinColumn(referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=true)
     */
     private Collection $Teams;
 

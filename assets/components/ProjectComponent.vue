@@ -2,7 +2,7 @@
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <div class="col">
+                <div class="col" v-if="isEditor==true">
                     <div class="card shadow-sm">
                         <a href="#" @click="addCard" class="ms-8">
                             <div class="card-body">
@@ -19,7 +19,7 @@
 
                     <FieldComponent v-model:header="field.header" v-model:content="field.content" v-model:link="field.link"
                         v-model:link_name="field.link_name" v-model:type="field.type" v-model:id="field.id"
-                        :projectId="project.id" />
+                        :projectId="project.id" :isEditor="isEditor"/>
 
                 </div>
             </div>
@@ -41,6 +41,9 @@ export default {
         projectData: {
             type: Object,
         },
+        isEditor:{
+            type: String,
+        },
     },
     data() {
         return {
@@ -48,6 +51,7 @@ export default {
         };
     },
     created() {
+        console.log(this.isEditor);
         this.project.fields.forEach(element => {
             element.uid = randomInt(Number.MAX_SAFE_INTEGER);
         });

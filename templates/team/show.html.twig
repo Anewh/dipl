@@ -30,37 +30,37 @@
 							</a>
 						{% endfor %}
 					</ol>
-					<div class="pb-2 border-bottom mb-2 mt-2"></div>
-					<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-						<a class="btn btn-outline-success me-1" href="{{ path('app_team_edit', {'id': team.id}) }}">Изменить</a>
-
-                        {{ include('team/_delete_form.html.twig') }}
-						{# <a class="btn-outline-danger">{{ include('team/_delete_form.html.twig') }}</a> #}
-                        
-					</div>
+					{# <div class="pb-2 border-bottom mb-2 mt-2"></div>
+										<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+											<a class="btn btn-outline-success me-1" href="{{ path('app_team_edit', {'id': team.id}) }}">Изменить</a>
+					
+					                        {{ include('team/_delete_form.html.twig') }}
+										
+					                        
+										</div> #}
 
 					{# <a href="{{ path('app_team_edit', {'id': team.id}) }}">edit</a> #}
-
 				</div>
 
 				<div class="col-sm-1"></div>
-				<div class="col-sm-4">
-					<h3>Проекты</h3>
-					{% for project in team.projects %}
-						<div class="pb-2 border-bottom"></div>
-						<a href="{{ path('app_project_show', {'id': project.id}) }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-							<div class="d-flex gap-2 w-100 justify-content-between">
-								<div>
-									<h4 class="fw-semibold mb-0">{{ project.fullName}}</h4>
-									<p class="mb-0 text-body-secondary">{{ project.codeName}}</p>
+				{% if is_granted('ROLE_DEV') %}
+					<div class="col-sm-4">
+						<h3>Проекты</h3>
+						{% for project in team.projects %}
+							<div class="pb-2 border-bottom"></div>
+							<a href="{{ path('app_project_show', {'id': project.id}) }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+								<div class="d-flex gap-2 w-100 justify-content-between">
+									<div>
+										<h4 class="fw-semibold mb-0">{{ project.fullName}}</h4>
+										<p class="mb-0 text-body-secondary">{{ project.codeName}}</p>
+									</div>
+									<small class="opacity-50 text-nowrap">{{ project.type}}</small>
 								</div>
-								<small class="opacity-50 text-nowrap">{{ project.type}}</small>
-							</div>
-						</a>
-						<div class="pb-2 border-bottom"></div>
-					{% endfor %}
-
-				</div>
+							</a>
+							<div class="pb-2 border-bottom"></div>
+						{% endfor %}
+					</div>
+				{% endif %}
 			</div>
 
 		</main>

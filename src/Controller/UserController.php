@@ -9,8 +9,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
 
 #[Route('/user')]
+// #[IsGranted('ROLE_USER')]
 class UserController extends AbstractController
 {
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
@@ -41,10 +44,20 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_profile_show', methods: ['GET'])]
+    // #[IsGranted('ROLE_USER')]
     public function show(User $user): Response
     {
+        /** @var ?User $user */
+        $activeUser = $this->getUser();
+        $isCurrent = false;
+
+        if($activeUser == $user) {
+            $isCurrent = true;
+        }
+
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'isCurrent' => $isCurrent
         ]);
     }
 

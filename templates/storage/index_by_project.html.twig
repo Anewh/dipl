@@ -1,17 +1,93 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}test
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+		{# {% for chart in charts %} #}
+			{# тут выводится инфа по всему проекту #}
+			<div class="my-3 p-3 bg-body rounded shadow-sm">
+				<h6 class="border-bottom pb-2 mb-0">{{ chart.project.fullName}}</h6>
+				<div class="d-flex text-body-secondary pt-3">
+					<svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveaspectratio="xMidYMid slice" focusable="false">
+						<title>Placeholder</title>
+						<rect width="100%" height="100%" fill="#007bff"></rect>
+						<text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text>
+					</svg>
+					{# <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+						<div class="d-flex justify-content-between">
+							<strong class="text-gray-dark">
+								{{ chart.project.fullName}}</strong>
+
+						</div>
+						<span class="d-block">
+							{{ chart.project.type}}</span>
+					</div> #}
+				</div>
+			</div>
+			<div class="row mb-2">
+				<div class="col-md-6">
+					<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+						<div class="col p-4 d-flex flex-column position-static">
+							{{ render_chart(chart.graph.chartProject,  {'height': 700}) }}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{# тут выводится инфа по всем репозиториям проекта #}
+			<div class="my-3 p-3 bg-body rounded shadow-sm">
+				<h6 class="border-bottom pb-2 mb-0">Репозитории</h6>
+			</div>
+
+			<div class="row mb-2">
+				{% for storage in chart.graph.chartStorages %}
+					<div class="col-md-6">
+						<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+							<div class="col p-4 d-flex flex-column position-static">
+								{{ render_chart(storage,  {'height': 400}) }}
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+
+			{# тут выводится инфа по всем веткам каждого репозитория #}
+			<div class="my-3 p-3 bg-body rounded shadow-sm">
+				<h6 class="border-bottom pb-2 mb-0">Ветки</h6>
+			</div>
+			<div class="row mb-3">
+				{% for branch in chart.graph.chartBranches %}
+					{# <div class="row mb-2"> #}
+					<div class="col-md-4">
+						<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+							<div class="col p-4 d-flex flex-column position-static">
+								{{ render_chart(branch,  {'height': 400}) }}
+							</div>
+						</div>
+					</div>
+					{# </div> #}
+				{% endfor %}
+			</div>
+
+
+		{# {% endfor %} #}
+
+
+	</div>
+{% endblock %}
+
+
+{# {% extends 'base.html.twig' %}
+
 {% block title %}Storage index{% endblock %}
 
 {% block body %}
-    <h1>Storages by project</h1>
-    <div class="container">
-    
-        {{ render_chart(chart,  {'width': 500, 'height': 500}) }}
-        {# You can pass HTML attributes as a second argument to add them on the <canvas> tag #}
-        {# {{ render_chart(chart, {'class': 'container'}) }} #}
-    </div>
+    <h1>Storage index</h1>
 
-    {# <table class="table">
+    <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -37,7 +113,7 @@
             </tr>
         {% endfor %}
         </tbody>
-    </table> #}
+    </table>
 
-    {# <a href="{{ path('app_storage_new') }}">Create new</a> #}
-{% endblock %}
+    <a href="{{ path('app_storage_new') }}">Create new</a>
+{% endblock %} #}
