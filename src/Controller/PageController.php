@@ -49,6 +49,9 @@ class PageController extends AbstractController
         if($page->getParent()){
             $page->setLvl($page->getParent()->getLvl() + 1);
         }
+        else {
+            $page->setLvl(1);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $pageRepository->save($page, true);
