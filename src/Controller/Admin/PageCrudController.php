@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Page;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -21,6 +22,7 @@ class PageCrudController extends AbstractCrudController
         return [
             // IdField::new('id'),
             TextField::new('header'),
+            NumberField::new('lvl'),
             TextEditorField::new('file'),
             AssociationField::new('project')
             ->setFormTypeOption('choice_label', 'fullName')

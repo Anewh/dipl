@@ -46,6 +46,9 @@ class Page
     #[Groups(['pageShow', 'projectShow'])]
     private ?string $header = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $lvl = null;
+
 
     public function __construct()
     {
@@ -156,5 +159,17 @@ class Page
     public function __toString(): string
     {
         return $this->getHeader();
+    }
+
+    public function getLvl(): ?int
+    {
+        return $this->lvl;
+    }
+
+    public function setLvl(?int $lvl): self
+    {
+        $this->lvl = $lvl;
+
+        return $this;
     }
 }

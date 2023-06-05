@@ -150,7 +150,7 @@ class ProjectController extends AbstractController
         $isEditor = in_array('ROLE_DEV', $user->getRoles()) || in_array('ROLE_ADMIN', $user->getRoles());
         
         $pages = $project->getPages()->toArray();
-        dd($pages[0]->getPages()->toArray());
+        //dd($pages[0]->getPages()->toArray());
 
         return $this->render('project/show.html.twig', [
             'projectData' => $normalizer->normalize($project, null, $context),//$project

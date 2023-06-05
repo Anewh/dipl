@@ -46,6 +46,10 @@ class PageController extends AbstractController
         $form = $this->createForm(PageType::class, $page, ['project_id' => intval($projectId) ]);
         $form->handleRequest($request);
 
+        if($page->getParent()){
+            $page->setLvl($page->getParent()->getLvl() + 1);
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
             $pageRepository->save($page, true);
 
@@ -135,6 +139,6 @@ class PageController extends AbstractController
             $pageRepository->remove($page, true);
         }
 
-        return $this->redirectToRoute('app_page_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_project_show', ['id'=>$page->getProject()->getId()], Response::HTTP_SEE_OTHER);
     }
 }
