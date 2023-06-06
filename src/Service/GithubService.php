@@ -42,7 +42,7 @@ class GithubService
         $chartBranches = [];
 
         //$client = Client::createWithHttpClient(new HttplugClient());
-        $this->client->authenticate($user->getToken(), null, \Github\AuthMethod::ACCESS_TOKEN);
+        $this->client->authenticate('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', null, \Github\AuthMethod::ACCESS_TOKEN);
 
 
         foreach ($storages as $storage) {
@@ -65,7 +65,7 @@ class GithubService
     public function getProjectDataset($project, $user)
     {
         //$client = Client::createWithHttpClient(new HttplugClient());
-        $this->client->authenticate($user->getToken(), null, \Github\AuthMethod::ACCESS_TOKEN);
+        $this->client->authenticate('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', null, \Github\AuthMethod::ACCESS_TOKEN);
 
         $storages = $project->getStorage()->toArray();
 
@@ -146,7 +146,7 @@ class GithubService
     // Получить активность по всем веткам конкретного репозитория
     public function getStorageDataset($storage, $user)
     {
-        $this->client->authenticate($user->getToken(), null, \Github\AuthMethod::ACCESS_TOKEN);
+        $this->client->authenticate('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', null, \Github\AuthMethod::ACCESS_TOKEN);
 
         // ветки по репозиторию
         $branches = $this->client->api('repo')->branches($storage->getAuthor(), $storage->getLink());
@@ -204,8 +204,8 @@ class GithubService
     public function getBrancheDataset($storage, $sha, $user)
     {
         //$client = Client::createWithHttpClient(new HttplugClient());
-        //$client->authenticate($user->getToken(), null, \Github\AuthMethod::ACCESS_TOKEN);
-        $this->client->authenticate($user->getToken(), null, \Github\AuthMethod::ACCESS_TOKEN);
+        //$client->authenticate('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', null, \Github\AuthMethod::ACCESS_TOKEN);
+        $this->client->authenticate('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', null, \Github\AuthMethod::ACCESS_TOKEN);
 
         // ветки по репозиторию
         $dates = [];

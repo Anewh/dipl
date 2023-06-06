@@ -32,7 +32,15 @@ class ProjectController extends AbstractController
     {
         /** @var ?User $user */
         $user = $this->getUser();
-        $projects = array_merge($user->getTeam()->getProjects()->toArray(), $user->getPRojects()->toArray());
+
+        //$isEditor = in_array('ROLE_DEV', $user->getRoles()) || in_array('ROLE_ADMIN', $user->getRoles());
+        if(in_array('ROLE_ADMIN', $user->getRoles())){
+            $projects = $projectRepository->findAll();
+        }
+        else{
+            $projects = array_merge($user->getTeam()->getProjects()->toArray(), $user->getPRojects()->toArray());
+        }
+
         //$user->getTeam()->getProjects();
         //$user->getPRojects();
      

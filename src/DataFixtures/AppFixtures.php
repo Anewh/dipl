@@ -17,177 +17,268 @@ class AppFixtures extends Fixture
     const USERS = [
         [
             'phone' => '89205553535',
-            'roles' => ['ROLE_USER'],
-            'email' => 'user@example.com',
+            'roles' => ['ROLE_DEV'],
+            'email' => 'russ@example.com',
             'password' => 'password',
             'lastname' => 'Иванов',
-            'firstname' => 'Иван',
-            'githubName' => 'exampleName',
-            'token' => 'example'
+            'firstname' => 'Руслан',
+            'githubName' => 'ruslooob',
+            'token' => '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'
         ],
         [
             'phone' => '89209999999',
-            'roles' => ['ROLE_USER'],
-            'email' => 'some@example.com',
+            'roles' => ['ROLE_DEV'],
+            'email' => 'dima@example.com',
             'password' => 'password',
-            'lastname' => 'Валя',
-            'firstname' => 'Петрова',
-            'githubName' => 'validatorValya',
-            'token' => 'example'
+            'lastname' => 'Смирнов',
+            'firstname' => 'Дмитрий',
+            'githubName' => 'dimasic25',
+            'token' => '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'
         ],
         [
             'phone' => '89508008080',
+            'roles' => ['ROLE_DEV'],
+            'email' => 'evg@example.com',
+            'password' => 'password',
+            'lastname' => 'Кузнецов',
+            'firstname' => 'Евгений',
+            'githubName' => 'GrishaginEvgeny',
+            'token' => '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'
+        ],
+        [
+            'phone' => '89508234080',
             'roles' => ['ROLE_ADMIN'],
             'email' => 'again@example.com',
             'password' => 'password',
-            'lastname' => 'Миладзе',
-            'firstname' => 'Валерий',
+            'lastname' => 'Микаелян',
+            'firstname' => 'Анна',
+            'githubName' => 'Anewh',
+            'token' => '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'
+        ],
+        [
+            'phone' => '89508004560',
+            'roles' => ['ROLE_DEV'],
+            'email' => 'some@example.com',
+            'password' => 'password',
+            'lastname' => 'Смирнова',
+            'firstname' => 'Дарья',
+            'githubName' => 'daria-popova',
+            'token' => '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'
+        ],
+        [
+            'phone' => '89578608080',
+            'roles' => ['ROLE_USER'],
+            'email' => 'owner@example.com',
+            'password' => 'password',
+            'lastname' => 'Иванов',
+            'firstname' => 'Иван',
             'githubName' => 'Anewh',
             'token' => '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'
         ]
+        
     ];
 
-    const STORAGE = [
-        'description' => 'Проект по практике ',
-        'link' => 'IntaroPracticeProject'
+    const STORAGES = [ 
+        [
+            'author' => 'GrishaginEvgeny',
+            'description' => ' ',
+            'link' => 'IntaroPracticeProject'
+        ],
+        [
+            'author' => 'intaro',
+            'description' => ' ',
+            'link' => 'symfony-course'
+        ],
+        [
+            'author' => 'Anewh',
+            'description' => ' ',
+            'link' => 'study-on'
+        ],
+        [
+            'author' => 'daria-popova',
+            'description' => ' ',
+            'link' => 'symfony-student-practice'
+        ],
+        [
+            'author' => 'daria-popova',
+            'description' => ' ',
+            'link' => 'symfony-vue'
+        ],
+        [
+            'author' => 'ruslooob',
+            'description' => 'habr clone',
+            'link' => 'HabrXX'
+        ],
+        
     ];
     const PROJECTS = [
         [
-            'fullName' => 'какой-то там модуль',
-            'codeName' => 'шавуха',
-            'type' => 'module'
+            'fullName' => 'Практика: Интернет-магазин одежды и продуктов для дома',
+            'codeName' => 'shop-practice',
+            'type' => 'web'
         ],
         [
-            'fullName' => 'какой-то там лендинг',
-            'codeName' => 'singlepage',
-            'type' => 'landing'
+            'fullName' => 'Study-on',
+            'codeName' => 'Онлайн-сервис для прохождения учебных курсов',
+            'type' => 'web'
         ],
         [
-            'fullName' => 'какой-то фронт для мобилки со стороны',
-            'codeName' => 'очередная лагучая херня',
-            'type' => 'mobile'
+            'fullName' => 'Symfony курсы',
+            'codeName' => 'Учебный проект для подготовки стажеров к рабочим проектам',
+            'type' => 'web'
         ],
         [
-            'fullName' => 'Диплом чат-боты',
-            'codeName' => 'чужой проект для показа тестов',
+            'fullName' => 'My Habr',
+            'codeName' => 'Сервис для публикации новостей, аналитических статей, мыслей, связанных с информационными технологиями, бизнесом и интернетом',
             'type' => 'web'
         ],
         
     ];
     const FIELDS = [
+        // Поля для проекта Практика - интернет магазин 
         [
-            'header' => 'Просто ссылка для примера',
-            'content' => 'Описание ссылки. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'header' => 'ТЗ на практику: интернет-магазин',
+            'content' => 'Требования к практике и к реализуемуму интернет-магазину',
             'type' => 'link',
-            'linkName' => 'example link',
+            'linkName' => 'Задание',
+            'link' => 'https://docs.google.com/document/d/1s5sY9SkQ1iTIBCtd8XtN1n_dq6yxCR-tES6qiha_mn8/edit#heading=h.w1r3v6pwapw8'
+        ],
+        [
+            'header' => 'Макет в фигме',
+            'content' => 'Примерный дизайн интерфеса. Не обязательно строго следовать каждой детали',
+            'type' => 'link',
+            'linkName' => 'макет',
             'link' => 'https://ru.lipsum.com/'
         ],
         [
-            'header' => 'Просто файлик для примера',
-            'content' => 'Описание файла. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-            'type' => 'file',
-            'linkName' => 'example file',
-            'link' => ''
+            'header' => 'Добавление ключей для взаимодействия с API RetailCRM',
+            'content' => 'Тут можно добавить API ключ для настройки взаимодействия сервисов',
+            'type' => 'link',
+            'linkName' => 'retailCRM admin api-keys',
+            'link' => 'https://popova.retailcrm.ru/admin/api-keys'
         ],
         [
-            'header' => 'Просто поле с текстом',
-            'content' => 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas',
+            'header' => 'Пример запроса для получения заказов из CRM',
+            'content' => 'Для осуществления запроса нужно составить ссылку вида: https://{username}.retailcrm.ru/api/v5/orders/115?apiKey={ApiKey}&by=id',
             'type' => 'text',
-            'linkName' => '',
-            'link' => ''
+            'linkName' => ' ',
+            'link' => ' '
         ],
+        // Study-on
         [
-            'header' => 'Просто ссылка для примера',
-            'content' => 'Описание ссылки. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+            'header' => 'ТЗ на study-on',
+            'content' => 'Задание',
             'type' => 'link',
-            'linkName' => 'example link',
-            'link' => 'https://ru.lipsum.com/'
+            'linkName' => 'тз/задание',
+            'link' => 'https://docs.google.com/document/d/1TJWj2YThSuLsDviYiXnhQWpCsCBiLUCRCPl5j4NbbKQ/edit'
         ],
         [
-            'header' => 'Просто ссылка для примера',
-            'content' => 'Описание ссылки. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'header' => 'Описание настройки тестового окружения проекта',
+            'content' => 'Настройка тестов. Тестовые сценарии указаны в ТЗ',
             'type' => 'link',
-            'linkName' => 'example link',
-            'link' => 'https://ru.lipsum.com/'
+            'linkName' => 'tests readme',
+            'link' => 'https://github.com/intaro/symfony-course/tree/master/practice/lesson-04'
         ],
         [
-            'header' => 'Просто файлик для примера',
-            'content' => 'Описание файла. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-            'type' => 'file',
-            'linkName' => 'example file',
-            'link' => ''
+            'header' => 'Настройка JWT для взаимодействия с биллинг-системой',
+            'content' => 'Кратко о настройке JWT. Детальная информация о биллинг-системе доступа в ТЗ',
+            'type' => 'link',
+            'linkName' => 'настройка токена',
+            'link' => 'https://github.com/intaro/symfony-course/tree/master/practice/lesson-05'
         ],
         [
-            'header' => 'Просто поле с текстом',
-            'content' => 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas',
+            'header' => 'Контактное лицо',
+            'content' => 'По вопросам обращаться к @ewhii (телеграмм)',
             'type' => 'text',
-            'linkName' => '',
-            'link' => ''
+            'linkName' => ' ',
+            'link' => ' '
         ],
         [
-            'header' => 'Просто ссылка для примера',
-            'content' => 'Описание ссылки. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+            'header' => 'Макет в фигме',
+            'content' => 'Примерный дизайн интерфеса. Не обязательно строго следовать каждой детали',
             'type' => 'link',
-            'linkName' => 'example link',
+            'linkName' => 'макет',
             'link' => 'https://ru.lipsum.com/'
         ],
         [
-            'header' => 'Просто ссылка для примера',
-            'content' => 'Описание ссылки. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'header' => 'Документация пользователя',
+            'content' => 'Ссылка на документацию пользователя. По вопросам изменения документации обращаться к @ewhii (телеграмм)',
             'type' => 'link',
-            'linkName' => 'example link',
+            'linkName' => 'user doc',
+            'link' => 'https://ru.lipsum.com/'
+        ],
+        // Symfony курсы
+        [
+            'header' => 'Документация пользователя',
+            'content' => 'Ссылка на документацию пользователя. По вопросам изменения документации обращаться к @ewhii (телеграмм)',
+            'type' => 'link',
+            'linkName' => 'user doc',
             'link' => 'https://ru.lipsum.com/'
         ],
         [
-            'header' => 'Просто файлик для примера',
-            'content' => 'Описание файла. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-            'type' => 'file',
-            'linkName' => 'example file',
-            'link' => ''
-        ],
-        [
-            'header' => 'Просто поле с текстом',
-            'content' => 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas',
-            'type' => 'text',
-            'linkName' => '',
-            'link' => ''
-        ],
-        [
-            'header' => 'Просто ссылка для примера',
-            'content' => 'Описание ссылки. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+            'header' => 'Требования к рефакторингу',
+            'content' => 'Описание того, что не следует менять при рефакторинге',
             'type' => 'link',
-            'linkName' => 'example link',
+            'linkName' => 'docs',
+            'link' => 'https://docs.google.com/document/d/1FONLTky_D9NRJnrSk_5sZV_Gv39-WsgQ8iJ3QkczFuo/edit'
+        ],
+        [
+            'header' => 'Требования к MVC',
+            'content' => 'Что должно быть в минимально работоспособном продукте',
+            'type' => 'link',
+            'linkName' => 'docs',
+            'link' => 'https://docs.google.com/presentation/d/1MBhq9nUMU7sTwwhxOnBG--LETp71STn-D4fufVFrJPU/edit#slide=id.p4'
+        ],
+        [
+            'header' => 'Общая информация',
+            'content' => 'ТЗ в упрощенном виде (другого нет)',
+            'type' => 'link',
+            'linkName' => 'docs',
+            'link' => 'https://docs.google.com/presentation/d/1EN0-XX2uJeTBeekN_ZoogckYZ-JC0KxAU_NndeRzkkQ/edit#slide=id.p4'
+        ],
+        [
+            'header' => 'Требования к БД',
+            'content' => 'Рекомендации разработчикам',
+            'type' => 'link',
+            'linkName' => 'docs',
+            'link' => 'https://docs.google.com/presentation/d/1PsihPRz3-Vv5XsyupponkgDZvWh_KnTICqyQbwtTXWU/edit#slide=id.p4'
+        ],
+        [
+            'header' => 'Требования к API',
+            'content' => 'Основные требования к API',
+            'type' => 'link',
+            'linkName' => 'docs',
+            'link' => 'https://docs.google.com/presentation/d/15Gg2VvcJSq2j2Dy44IkN7u6qKcrJwFNmgS1ZO3r2UPI/edit#slide=id.p4'
+        ],
+        // My Habr
+        [
+            'header' => 'Документация пользователя',
+            'content' => 'Ссылка на документацию пользователя. По вопросам изменения документации обращаться к @ewhii (телеграмм)',
+            'type' => 'link',
+            'linkName' => 'user doc',
             'link' => 'https://ru.lipsum.com/'
         ],
         [
-            'header' => 'Просто ссылка для примера',
-            'content' => 'Описание ссылки. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'header' => 'Макет в фигме',
+            'content' => 'Примерный дизайн интерфеса. Не обязательно строго следовать каждой детали',
             'type' => 'link',
-            'linkName' => 'example link',
+            'linkName' => 'макет',
             'link' => 'https://ru.lipsum.com/'
         ],
         [
-            'header' => 'Просто файлик для примера',
-            'content' => 'Описание файла. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-            'type' => 'file',
-            'linkName' => 'example file',
-            'link' => ''
-        ],
-        [
-            'header' => 'Просто поле с текстом',
-            'content' => 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas',
-            'type' => 'text',
-            'linkName' => '',
-            'link' => ''
-        ],
-        [
-            'header' => 'Просто ссылка для примера',
-            'content' => 'Описание ссылки. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+            'header' => 'Общая информация',
+            'content' => 'ТЗ',
             'type' => 'link',
-            'linkName' => 'example link',
-            'link' => 'https://ru.lipsum.com/'
+            'linkName' => 'docs',
+            'link' => 'https://docs.google.com/presentation/d/1EN0-XX2uJeTBeekN_ZoogckYZ-JC0KxAU_NndeRzkkQ/edit#slide=id.p4'
         ],
-        
+        [
+            'header' => 'Use cases',
+            'content' => 'Пути пользователя',
+            'type' => 'link',
+            'linkName' => 'docs',
+            'link' => 'https://docs.google.com/presentation/d/1PsihPRz3-Vv5XsyupponkgDZvWh_KnTICqyQbwtTXWU/edit#slide=id.p4'
+        ]
         
     ];
 
@@ -224,10 +315,10 @@ class AppFixtures extends Fixture
         }
 
 
-        $storage = (new Storage())
-        ->setDescription(self::STORAGE['description'])
-        ->setLink(self::STORAGE['link'])
-        ->setAuthor('GrishaginEvgeny');
+        // $storage = (new Storage())
+        // ->setDescription(self::STORAGE['description'])
+        // ->setLink(self::STORAGE['link'])
+        // ->setAuthor('GrishaginEvgeny');
 
         $fields = [];
 
@@ -248,37 +339,71 @@ class AppFixtures extends Fixture
             $project = (new Project())
                 ->setFullName($value['fullName'])
                 ->setCodeName($value['codeName'])
-                ->setType($value['type'])
-                ->addStorage($storage);
-            foreach ($fields as $field) {
-                $project->addField($field);
-                //$field->setProject($project);
-            }
-            foreach ($fields as $field) {
-                $project->addField($field);
-                //$field->setProject($project);
-            }
-            foreach ($fields as $field) {
-                $project->addField($field);
-                //$field->setProject($project);
-            }
+                ->setType($value['type']);
+                // ->addStorage($storage);
+            // foreach ($fields as $field) {
+            //     $project->addField($field);
+            //     //$field->setProject($project);
+            // }
+            // foreach ($fields as $field) {
+            //     $project->addField($field);
+            //     //$field->setProject($project);
+            // }
+            // foreach ($fields as $field) {
+            //     $project->addField($field);
+            //     //$field->setProject($project);
+            // }
             array_push($projects, $project);
         }
 
-        $team1 = (new Team())->addUser($users[0])->setName('Team 1');
-        $team2 = (new Team())->addUser($users[1])->addUser($users[2])->setName('Team 2');
+        $team1 = (new Team())->addUser($users[2])->addUser($users[3])->addUser($users[4])->setName('Team 1');
+        $team2 = (new Team())->addUser($users[0])->addUser($users[1])->setName('Team 2');
 
         $projects[0]->addTeam($team1);
         $projects[1]->addTeam($team1);
         $projects[2]->addTeam($team1);
-
+        $projects[2]->addTeam($team2);
         $projects[3]->addTeam($team2);
-        $projects[3]->addStorage($storage);
+        $projects[3]->addUser($users[5]);
+        //$projects[3]->addStorage($storage);
+
+        $storages = [];
+        foreach (self::STORAGES as $i => $value) {
+            $storage = (new Storage())
+                ->setDescription($value['description'])
+                ->setLink($value['link'])
+                ->setAuthor($value['author']);
+            array_push($storages, $storage);
+        }
+
+
+        $projects[0]->addStorage($storages[0]);
+        $projects[1]->addStorage($storages[1]);
+        $projects[1]->addStorage($storages[2]);
+        $projects[2]->addStorage($storages[3]);
+        $projects[2]->addStorage($storages[4]);
+        $projects[3]->addStorage($storages[5]);
+
+        for($i = 0; $i < 4; $i++){
+            $projects[0]->addField($fields[$i]);
+        }
+
+        for($i = 4; $i < 10; $i++){
+            $projects[1]->addField($fields[$i]);
+        }
+
+        for($i = 10; $i < 16; $i++){
+            $projects[2]->addField($fields[$i]);
+        }
+
+        for($i = 16; $i < 20; $i++){
+            $projects[3]->addField($fields[$i]);
+        }
 
 
         $manager->persist($team1);
         $manager->persist($team2);
-        $manager->persist($storage);
+        //$manager->persist($storage);
         
         
         foreach($projects as $elem){
@@ -286,6 +411,14 @@ class AppFixtures extends Fixture
         }
 
         foreach($users as $elem){
+            $manager->persist($elem);
+        }
+
+        foreach($fields as $elem){
+            $manager->persist($elem);
+        }
+
+        foreach($storages as $elem){
             $manager->persist($elem);
         }
 
