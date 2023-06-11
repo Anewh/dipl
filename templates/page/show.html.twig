@@ -1,23 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Page{% endblock %}
+{% block title %}Редактирование страницы
+{% endblock %}
 
 {% block body %}
+	<div class="container">
+		<div class='h2 mb-2'>
+			{{ page.project.fullName}}
+		</div>
+		<a class="btn btn-outline-secondary mb-2" href="{{ path('app_project_show', {'id': page.project.id}) }}">Вернуться</a>
+		<div {{ vue_component('MdPageComponent', { 'pageData': pageData, 'projectIdData': projectId, 'isEditor': isEditor} ) }}></div>
 
-<div class="container">
-    <div class='h2 mb-2'> {{ page.project.fullName}} </div>
-    <a class="btn btn-outline-secondary mb-2" href="{{ path('app_project_show', {'id': page.project.id}) }}">Вернуться</a>
-    <div {{ vue_component('MdPageComponent', { 'pageData': pageData, 'projectIdData': projectId, 'isEditor': isEditor} ) }}></div>
-    
-    {# <a href="{{ path('app_page_index') }}">back to list</a> #}
-
-    {# <a href="{{ path('app_page_edit', {'id': page.id}) }}">edit</a> #}
-
-
-    {% if pageData.id is defined %} 
-        {% if is_granted('ROLE_DEV')%}
-            {{ include('page/_delete_form.html.twig') }} 
-        {% endif %}
-    {% endif %}
-    </div>
+		{% if pageData.id is defined %}
+			{% if is_granted('ROLE_DEV')%}
+				{{ include('page/_delete_form.html.twig') }}
+			{% endif %}
+		{% endif %}
+	</div>
 {% endblock %}

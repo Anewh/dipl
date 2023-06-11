@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\StorageRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: StorageRepository::class)]
 class Storage
@@ -24,6 +25,7 @@ class Storage
     private ?Project $project = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(max: 255, maxMessage: 'Укажите корректный ник Github')]
     private ?string $author = null;
 
     public function getId(): ?int

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Team index
+{% block title %}Все команды
 {% endblock %}
 
 {% block body %}
@@ -10,62 +10,17 @@
 			<div class="col-sm-4">
 				<h1>Все команды</h1>
 				<ol class="list-group list-group-numbered">
-                {% for team in teams %}
-					<a href="{{ path('app_team_show', {'id': team.id}) }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-						<li class=" d-flex justify-content-between align-items-start">
-							<div class="ms-2 me-auto">
-								<div class="fw-bold">{{ team.name }}</div>
-							</div>
-						</li>
-					</a>
-                    {% endfor %}
+					{% for team in teams %}
+						<a href="{{ path('app_team_show', {'id': team.id}) }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+							<li class=" d-flex justify-content-between align-items-start">
+								<div class="ms-2 me-auto">
+									<div class="fw-bold">{{ team.name }}</div>
+								</div>
+							</li>
+						</a>
+					{% endfor %}
 				</ol>
-                {# <a class="btn btn-outline-success mt-3" href="{{ path('app_team_new') }}"> Добавить </a> #}
 			</div>
-
-			{# <div class="col-sm-1"></div>
-			<div class="col-sm-4">
-				<h1>Team index</h1>
-
-				<div class="pb-2 border-bottom"></div>
-				<a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-					<div class="d-flex gap-2 w-100 justify-content-between">
-						<div>
-							<h4 class="fw-semibold mb-0">Third heading</h4>
-							<p class="mb-0 text-body-secondary">Some placeholder content in a paragraph.</p>
-						</div>
-						<small class="opacity-50 text-nowrap">1w</small>
-					</div>
-				</a>
-				<div class="pb-2 border-bottom"></div>
-
-
-				<div class="pb-2 border-bottom"></div>
-				<a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-					<div class="d-flex gap-2 w-100 justify-content-between">
-						<div>
-							<h4 class="fw-semibold mb-0">Third heading</h4>
-							<p class="mb-0 text-body-secondary">Some placeholder content in a paragraph.</p>
-						</div>
-						<small class="opacity-50 text-nowrap">1w</small>
-					</div>
-				</a>
-				<div class="pb-2 border-bottom"></div>
-
-
-				<div class="pb-2 border-bottom"></div>
-				<a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-					<div class="d-flex gap-2 w-100 justify-content-between">
-						<div>
-							<h4 class="fw-semibold mb-0">Third heading</h4>
-							<p class="mb-0 text-body-secondary">Some placeholder content in a paragraph.</p>
-						</div>
-						<small class="opacity-50 text-nowrap">1w</small>
-					</div>
-				</a>
-				<div class="pb-2 border-bottom"></div>
-
-			</div>
-		</div> #}
+		</div>
 	</main>
 {% endblock %}

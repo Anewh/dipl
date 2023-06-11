@@ -1,10 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Project
+{% block title %}Просмотр проекта
 {% endblock %}
 
 {% block body %}
-
 	<main class="container-fluid py-3">
 		<div class="row">
 			<div class="col-sm-2">
@@ -15,9 +14,8 @@
 								<p class="h4">{{ project.fullName}}</p>
 							</div>
 							<p class="mb-1">{{ project.CodeName}}</p>
-							{# <small>{{ project.type}}</small> #}
 						</a>
-						<hr/>
+						<hr>
 					</div>
 					<p class="h">Команды</p>
 					<nav class="small" id="toc">
@@ -31,12 +29,12 @@
 						{% endfor %}
 						<hr/>
 					</nav>
-					{# <p class="h mt-2">Статистика</p> #}
+
 					<nav class="small" id="toc">
 						<hr/>
 						<ul class="list-group">
 							<li class="list-group-item d-flex justify-content-between align-items-center">
-								<a href="{{ path('app_storage_index_by_project', {'projectId': project.id}) }}" class="list-group-item-action text-decoration-none">Активность</a>
+								<a href="{{ path('app_project_storage_index', {'projectId': project.id}) }}" class="list-group-item-action text-decoration-none">Активность</a>
 							</li>
 						</ul>
 						<hr/>
@@ -48,19 +46,16 @@
 							{% if is_granted('ROLE_DEV') %}
 								<a class="btn btn-outline-success me-1" href="{{ path('app_project_edit', {'id': project.id}) }}">Изменить</a>
 							{% endif %}
-							{# {{ include('team/_delete_form.html.twig') }} #}
 
 							<a class="btn btn-outline-primary me-1" href="{{ path('app_project_index') }}">К списку проектов</a>
 
-							{# <a href="{{ path('app_project_edit', {'id': project.id}) }}">edit</a> #}
 							{% if is_granted('ROLE_DEV') %}
 								{{ include('project/_delete_form.html.twig') }}
 							{% endif %}
 
 						</div>
 					</nav>
-					{# </aside> #}
-					{# <aside class="bd-aside sticky-xl-top text-body-secondary align-self-start mb-3 mb-xl-5 px-2"> #}
+
 					{% if project.users.size is defined %}
 						<h2 class="h6 pb-3 mb-1 border-bottom">Пользователи</h2>
 						<nav class="small" id="toc">
@@ -75,60 +70,29 @@
 						</nav>
 					{% endif %}
 				</aside>
-				{# <a class="btn btn-dark rounded-pill px-3" href="{{ path('app_storage_by_project', {'project_id': project.id}) }}">Статистика</a>  #}
 			</div>
 			<div class="col-sm-8">
 				<div {{ vue_component('ProjectComponent', { 'projectData': projectData, 'isEditor': isEditor } ) }}></div>
 			</div>
 			<div class="col-sm-2 mt-2">
-
-
 				<nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4 border-end list-group">
 					<nav class="nav nav-pills flex-column">
-						{% for page in pages %}
+						{% for page in pages|sort((a, b) => a.id > b.id) %}
 							<a class="nav-link" href="{{ path('app_page_show', {'id': page.id}) }}">
-								{% for i in range(1, page.lvl) %}
-									.{# <span style='padding-left:20px;'> </span> #}
+								{% for i in range(1, page.level) %}
+									.
 								{% endfor %}
-								{# {{ page.lvl * ' '}} #}
 								{{ page.header }}
 							</a>
-							{# <a href="{{ path('app_page_edit', {'id': page.id}) }}">edit</a> #}
-							{# {{ include('page/_delete_form.html.twig') }} #}
 						{% endfor %}
 						{% if is_granted('ROLE_DEV') %}
 							<a class="btn btn-outline-dark" href="{{ path('app_page_new', {'projectId': project.id}) }}">
 								Новая страница
 							</a>
 						{% endif %}
-						{# <a href="{{ path('app_page_edit', {'id': project.id , 'page_id': 'new'}) }}">Create new </a> #}
-					{# <a href="{{ path('app_page_new') }}">Create new</a> #}
-
-						{# <div {{ vue_component('PageListComponent', { 'pagesData': projectData.pages } ) }}></div> #}
-
-						{# <a class="nav-link" href="#item-1">Item 1</a>
-													<nav class="nav nav-pills flex-column">
-														<a class="nav-link ms-3 my-1" href="#item-1-1">Item 1-1</a>
-														<a class="nav-link ms-3 my-1" href="#item-1-2">Item 1-2</a>
-													</nav>
-													<a class="nav-link" href="#item-2">Item 2</a>
-													<a class="nav-link" href="#item-3">Item 3</a>
-													<nav class="nav nav-pills flex-column">
-														<a class="nav-link ms-3 my-1" href="#item-3-1">Item 3-1</a>
-														<a class="nav-link ms-3 my-1" href="#item-3-2">Item 3-2</a>
-													</nav> #}
 					</nav>
 				</nav>
-
 			</div>
 		</div>
 	</main>
-
-	{# <a href="{{ path('app_project_index') }}">back to list</a>
-				
-					<a href="{{ path('app_project_edit', {'id': project.id}) }}">edit</a>
-				
-					{{ include('project/_delete_form.html.twig') }} #}
-
-	{# <div {{ vue_component('MyComponent', { 'name': 'FFFFFFFFFFFFFFFFF' } ) }}></div> #}
 {% endblock %}

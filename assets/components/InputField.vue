@@ -5,16 +5,16 @@
 
             <input v-if="type !== 'textarea'"
                    v-model="value"
-                   :type="type" 
+                   :type="type"
                    :placeholder="placeholder"
-                   :min="min" 
+                   :min="min"
                    :max="max"
                    :disabled="disabled"
                    class="form-control">
 
             <textarea v-else
                       v-model="value"
-                      :type="type" 
+                      :type="type"
                       :placeholder="placeholder"
                       :disabled="disabled"
                       class="form-control"

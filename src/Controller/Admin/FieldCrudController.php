@@ -25,18 +25,11 @@ class FieldCrudController extends AbstractCrudController
             IdField::new('id'),
             TextField::new('header'),
             TextEditorField::new('content'),
-            //CollectionField::new('project')
-            //AssociationField::new('project')->setCrudController(ProjectCrudController::class)
         ];
     }
     
-
-
     public function setBlogPostSlug(BeforeEntityPersistedEvent $event)
     {
         $entity = $event->getEntityInstance();
-        //dd($entity);
     }
-    
-    
 }

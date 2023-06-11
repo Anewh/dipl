@@ -2,7 +2,8 @@
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <div class="col" v-if="isEditor==true">
+
+                <div class="col" v-if="isEditor == true">
                     <div class="card shadow-sm">
                         <a href="#" @click="addCard" class="ms-8">
                             <div class="card-body">
@@ -15,11 +16,11 @@
                         </a>
                     </div>
                 </div>
-                <div v-for="field in project.fields" :key="field.uid">
 
+                <div v-for="field in project.fields" :key="field.uid">
                     <FieldComponent v-model:header="field.header" v-model:content="field.content" v-model:link="field.link"
-                        v-model:link_name="field.link_name" v-model:type="field.type" v-model:id="field.id"
-                        :projectId="project.id" :isEditor="isEditor"/>
+                                    v-model:link_name="field.link_name" v-model:type="field.type" v-model:id="field.id"
+                                    :projectId="project.id" :isEditor="isEditor" />
 
                 </div>
             </div>
@@ -41,7 +42,7 @@ export default {
         projectData: {
             type: Object,
         },
-        isEditor:{
+        isEditor: {
             type: String,
         },
     },
@@ -71,8 +72,8 @@ export default {
         },
         deleteCard(cardId) {
             var indexDel = 0;
-            for (var i = 0 ; i < this.project.fields.length; i++) { 
-                if(this.project.fields[i].id == cardId){
+            for (var i = 0; i < this.project.fields.length; i++) {
+                if (this.project.fields[i].id == cardId) {
                     indexDel = i;
                     console.log(indexDel);
                     console.log(this.project.fields[i].header);
@@ -83,4 +84,5 @@ export default {
     },
 }
 </script>
+
 <style lang="scss" scoped></style>

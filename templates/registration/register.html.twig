@@ -13,23 +13,23 @@
 			<div class="needs-validation" novalidate="">
 				<div class="py-5 text-center w-75 m-auto">
 					<div class="col">
-						<form class="needs-validation" novalidate="">
+						<div class="needs-validation" novalidate="">
 						{{ form_start(registrationForm) }}
 							<div class="row g-3">
 								<div class="col-6">
 									{{ form_row(registrationForm.email) }}
 									{{ form_row(registrationForm.phone) }}
 									{{ form_row(registrationForm.firstname) }}
-									{{ form_row(registrationForm.githubName) }}
+									{# {{ form_row(registrationForm.githubName) }} #}
 								</div>
 								<div class="col-6">
 									{{ form_row(registrationForm.plainPassword, { label: 'Password'}) }}
 									{{ form_row(registrationForm.lastname) }}
-									{{ form_row(registrationForm.position) }}
+									{# {{ form_row(registrationForm.position) }} #}
 								</div>
 							</div>
 							<button type="submit" class="btn btn-outline-primary mt-4">Зарегистрироваться</button>
-						</form>
+						</div>
 					</div>
 				</div>
 

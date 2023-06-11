@@ -14,7 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PageType extends AbstractType
 {
-
     private ProjectRepository $projectRepository;
     private PageRepository $pageRepository;
 
@@ -29,31 +28,27 @@ class PageType extends AbstractType
         $builder
             ->add('header', TextType::class, [
                 'label' => 'Заголовок'
-                ])
-            ->add('file', TextType::class, [
-                'label' => 'Содержимое страницы'
-                ])
+            ])
             ->add('parent', EntityType::class, [
                 'label' => 'Родитель',
                 'class' => Page::class,
-                'choices' => $this->pageRepository->findByProject($this->projectRepository->findById($options['project_id'])),
+                'choices' => $this->pageRepository->findByProject($options['project_id']),
                 'choice_label' => 'header'
-                ])
+            ])
             ->add('project', EntityType::class, [
                 'label' => 'Проект',
                 'class' => Project::class,
                 'choices' => $this->projectRepository->findById($options['project_id']),
                 'choice_label' => 'fullName'
-                ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Page::class,
-        ]);
-        $resolver->setRequired(['project_id']);
-        $resolver->setAllowedTypes('project_id', 'int');
+        ])
+            ->setRequired(['project_id'])
+            ->setAllowedTypes('project_id', 'int');
     }
 }

@@ -9,10 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'Данный email уже занят другим пользователем')]
+#[UniqueEntity(fields: ['phone'], message: 'Данный номер телефона уже занят другим пользователем')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -21,6 +23,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message: 'Укажите email')]
+    #[Assert\Email(message: 'Укажите email в правильном формате')]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -32,25 +36,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank(message: 'Укажите номер телефона')]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Укажите имя')]
+    #[Assert\Length(max: 255, maxMessage: 'Укажите корректное имя')]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Укажите фамилию')]
+    #[Assert\Length(max: 255, maxMessage: 'Укажите корректную фамилию')]
     private ?string $lastname = null;
 
     #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'users')]
     private Collection $projects;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $githubname = null;
+    #[Assert\Length(max: 255, maxMessage: 'Укажите корректный ник в Github')]
+    private ?string $githubName = null;
 
     #[ORM\Column(length: 1024, nullable: true)]
+    #[Assert\Length(max: 1024, maxMessage: 'Укажите корректный токен доступа Github')]
     private ?string $token = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255, maxMessage: 'Укажите корректную должность')]
     private ?string $position = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
@@ -202,12 +214,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getGithubName(): ?string
     {
-        return $this->githubname;
+        return $this->githubName;
     }
 
-    public function setGithubName(?string $githubname): self
+    public function setGithubName(?string $githubName): self
     {
-        $this->githubname = $githubname;
+        $this->githubName = $githubName;
 
         return $this;
     }

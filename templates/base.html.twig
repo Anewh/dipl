@@ -3,12 +3,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Welcome!
-			{% endblock %}
+			{% block title %}{% endblock %} {{'< MyDocs'}}
 		</title>
-		<link
-		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
@@ -18,86 +16,79 @@
 		{% endblock %}
 	</head>
 	<body>
-	<header class="mb-4 border-bottom">
-		<nav class="navbar navbar-expand-lg bg-body-tertiary">
-			<div class="container-fluid">
-				<div class="navbar-brand" href="{{ path('app_project_index') }}">MyDocs</div>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item">
-							<a class="nav-link" href="{{ path('app_main') }}">На главную</a>
-						</li>
-						{% if app.user %}
-						{% if is_granted('ROLE_DEV') %}
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="{{ path('app_team_index') }}">Команды</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="{{ path('app_storage_index') }}">Активность</a>
-						</li>
-						{% endif %}
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="{{ path('app_project_index') }}">Проекты</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="{{ path('app_profile_show', {'id': app.user.id}) }}">Профиль</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link disable" href="{{ path('app_main') }}">{{ app.user.email }}</a>
-						</li>
-						{% if is_granted('ROLE_ADMIN') %}
+		<header class="mb-4 border-bottom">
+			<nav class="navbar navbar-expand-lg bg-body-tertiary">
+				<div class="container-fluid">
+					<div class="navbar-brand" href="{{ path('app_project_index') }}">MyDocs</div>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 							<li class="nav-item">
-								<a class="nav-link btn-outline-secodnary" href="{{ path('admin') }}"> Панель администратора </a>
-							</li>
-						{% endif %}
-						{% endif %}
-					</ul>
-					<div class="collapse navbar-collapse d-flex justify-content-end">
-						<ul class="navbar-nav d-flex justify-content-end">
-							<li class="nav-item">
-								
+								<a class="nav-link" href="{{ path('app_main') }}">На главную</a>
 							</li>
 							{% if app.user %}
-								<div class="d-flex justify-content-end">
-									<li class="nav-item ml-1" style="margin-right: 10px;">
-										{# <h6 class="m-md-0">
-											{{ app.user.email }}
-										</h6> #}
+								{% if is_granted('ROLE_DEV') %}
+									<li class="nav-item">
+										<a class="nav-link active" aria-current="page" href="{{ path('app_team_index') }}">Команды</a>
 									</li>
 									<li class="nav-item">
-										<a 
-										href="{{ path('app_logout') }}"
-										 class="btn btn-outline-dark ms-2">
-											Выход
-										</a>
+										<a class="nav-link active" aria-current="page" href="{{ path('app_storage_index') }}">Активность</a>
 									</li>
-								{% else %}
-									<li class="nav-item ml-1">
-										<a href="{{ path('app_register') }}" class="btn btn-outline-dark ms-2">
-											Регистрация
-										</a>
-									</li>
-									<li class="nav-item ml-1 ms-2">
-										<a href="{{ path('app_login') }}" class="btn btn btn-dark">
-											Вход
-										</a>
-									</li>
-									{# </div> #}
 								{% endif %}
-							</div>
+								<li class="nav-item">
+									<a class="nav-link active" aria-current="page" href="{{ path('app_project_index') }}">Проекты</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link active" aria-current="page" href="{{ path('app_profile_show', {'id': app.user.id}) }}">Профиль</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link disable" href="{{ path('app_main') }}">{{ app.user.email }}</a>
+								</li>
+								{% if is_granted('ROLE_ADMIN') %}
+									<li class="nav-item">
+										<a class="nav-link btn-outline-secodnary" href="{{ path('admin') }}">
+											Панель администратора
+										</a>
+									</li>
+								{% endif %}
+							{% endif %}
 						</ul>
+						<div class="collapse navbar-collapse d-flex justify-content-end">
+							<ul class="navbar-nav d-flex justify-content-end">
+								<li class="nav-item"></li>
+								{% if app.user %}
+									<div class="d-flex justify-content-end">
+										<li class="nav-item ml-1" style="margin-right: 10px;"></li>
+										<li class="nav-item">
+											<a href="{{ path('app_logout') }}" class="btn btn-outline-dark ms-2">
+												Выход
+											</a>
+										</li>
+									{% else %}
+										<li class="nav-item ml-1">
+											<a href="{{ path('app_register') }}" class="btn btn-outline-dark ms-2">
+												Регистрация
+											</a>
+										</li>
+										<li class="nav-item ml-1 ms-2">
+											<a href="{{ path('app_login') }}" class="btn btn btn-dark">
+												Вход
+											</a>
+										</li>
+									{% endif %}
+								</div>
+							</ul>
+						</div>
 					</div>
-				</div>
-			</nav>
+				</nav>
 			</header>
-			
+
 			{% block body %}
 				<script src="{{ asset('build/app.js') }}" defer></script>
 			{% endblock %}
-			
+
 		</body>
 		<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
 	</body>

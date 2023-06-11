@@ -6,9 +6,12 @@ use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
+#[UniqueEntity(fields: ['codeName'], message: 'Данный код уже занят')]
 class Project
 {
     #[ORM\Id]
@@ -18,16 +21,18 @@ class Project
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(max: 255, maxMessage: 'Укажите корректное название')]
     private ?string $fullName = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\Length(max: 255, maxMessage: 'Укажите корректный код')]
     private ?string $codeName = null;
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
     #[ORM\OneToMany(mappedBy: 'project', targetEntity: Storage::class)]
-    private Collection $storage;
+    private Collection $storages;
 
     #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'projects')]
     /**
@@ -35,15 +40,14 @@ class Project
      * @ORM\ManyToMany(targetEntity="App\Entity\Team", cascade={"persist"})
      * @ORM\JoinTable(name="project_team")
      * @ORM\JoinColumn(referencedColumnName="id", nullable=true)
-    */
-    private Collection $Teams;
+     */
+    private Collection $teams;
 
     #[ORM\OneToMany(mappedBy: 'project', targetEntity: Page::class)]
     #[Groups(['projectShow'])]
-    
     private Collection $pages;
 
-    #[ORM\OneToMany(mappedBy: 'project', targetEntity: Field::class, cascade:['all'])]
+    #[ORM\OneToMany(mappedBy: 'project', targetEntity: Field::class, cascade: ['all'])]
     #[Groups(['projectShow'])]
     private Collection $fields;
 
@@ -52,8 +56,8 @@ class Project
 
     public function __construct()
     {
-        $this->storage = new ArrayCollection();
-        $this->Teams = new ArrayCollection();
+        $this->storages = new ArrayCollection();
+        $this->teams = new ArrayCollection();
         $this->pages = new ArrayCollection();
         $this->fields = new ArrayCollection();
         $this->users = new ArrayCollection();
@@ -108,15 +112,15 @@ class Project
     /**
      * @return Collection<int, Storage>
      */
-    public function getStorage(): Collection
+    public function getStorages(): Collection
     {
-        return $this->storage;
+        return $this->storages;
     }
 
     public function addStorage(Storage $storage): self
     {
-        if (!$this->storage->contains($storage)) {
-            $this->storage->add($storage);
+        if (!$this->storages->contains($storage)) {
+            $this->storages->add($storage);
             $storage->setProject($this);
         }
 
@@ -125,7 +129,7 @@ class Project
 
     public function removeStorage(Storage $storage): self
     {
-        if ($this->storage->removeElement($storage)) {
+        if ($this->storages->removeElement($storage)) {
             // set the owning side to null (unless already changed)
             if ($storage->getProject() === $this) {
                 $storage->setProject(null);
@@ -140,13 +144,13 @@ class Project
      */
     public function getTeams(): Collection
     {
-        return $this->Teams;
+        return $this->teams;
     }
 
     public function addTeam(Team $team): self
     {
-        if (!$this->Teams->contains($team)) {
-            $this->Teams->add($team);
+        if (!$this->teams->contains($team)) {
+            $this->teams->add($team);
         }
 
         return $this;
@@ -154,7 +158,7 @@ class Project
 
     public function removeTeam(Team $team): self
     {
-        $this->Teams->removeElement($team);
+        $this->teams->removeElement($team);
 
         return $this;
     }
@@ -214,7 +218,7 @@ class Project
         return $this;
     }
 
-     /**
+    /**
      * Remove posts
      *
      * @param \App\Entity\Field $fields

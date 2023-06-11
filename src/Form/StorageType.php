@@ -15,27 +15,7 @@ class StorageType extends AbstractType
     {
         $builder
             ->add('link')
-            ->add('description')
-            // ->add('project', CollectionType::class, [
-            //     // each entry in the array will be an "email" field
-            //     'entry_type' => TextType::class,
-            //     // these options are passed to each "email" type
-            //     'entry_options' => [
-            //         'attr' => ['name' => 'name-box'],
-            //     ],
-            // ])
-            // ->add('project', CollectionType::class, [
-            //     'entry_type'   => ChoiceType::class,
-            //     'entry_options'  => [
-            //         'choices'  => [
-            //             'Nashville' => 'nashville',
-            //             'Paris'     => 'paris',
-            //             'Berlin'    => 'berlin',
-            //             'London'    => 'london',
-            //         ],
-            //     ]])
-            ;
-        ;
+            ->add('description');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

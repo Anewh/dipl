@@ -4,10 +4,9 @@
 {% endblock %}
 
 {% block body %}
-
 	<div class="container">
 		{% for chart in charts %}
-			{# тут выводится инфа по всему проекту #}
+			{# вывод информации по всему проекту #}
 			<div class="my-3 p-3 bg-body rounded shadow-sm">
 				<h6 class="border-bottom pb-2 mb-0">Проекты</h6>
 				<div class="d-flex text-body-secondary pt-3">
@@ -37,7 +36,7 @@
 				</div>
 			</div>
 
-			{# тут выводится инфа по всем репозиториям проекта #}
+			{# инфомация по всем репозиториям проекта #}
 			<div class="my-3 p-3 bg-body rounded shadow-sm">
 				<h6 class="border-bottom pb-2 mb-0">Репозитории</h6>
 			</div>
@@ -54,13 +53,12 @@
 				{% endfor %}
 			</div>
 
-			{# тут выводится инфа по всем веткам каждого репозитория #}
+			{# инфомация по всем веткам каждого репозитория #}
 			<div class="my-3 p-3 bg-body rounded shadow-sm">
 				<h6 class="border-bottom pb-2 mb-0">Ветки</h6>
 			</div>
 			<div class="row mb-3">
 				{% for branch in chart.graph.chartBranches %}
-					{# <div class="row mb-2"> #}
 					<div class="col-md-4">
 						<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 							<div class="col p-4 d-flex flex-column position-static">
@@ -68,52 +66,8 @@
 							</div>
 						</div>
 					</div>
-					{# </div> #}
 				{% endfor %}
 			</div>
-
-
 		{% endfor %}
-
-
 	</div>
 {% endblock %}
-
-
-{# {% extends 'base.html.twig' %}
-
-{% block title %}Storage index{% endblock %}
-
-{% block body %}
-    <h1>Storage index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Link</th>
-                <th>Description</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for storage in storages %}
-            <tr>
-                <td>{{ storage.id }}</td>
-                <td>{{ storage.link }}</td>
-                <td>{{ storage.description }}</td>
-                <td>
-                    <a href="{{ path('app_storage_show', {'id': storage.id}) }}">show</a>
-                    <a href="{{ path('app_storage_edit', {'id': storage.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_storage_new') }}">Create new</a>
-{% endblock %} #}

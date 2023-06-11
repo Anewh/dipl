@@ -26,23 +26,7 @@
                 </div>
             </div>
         </ul>
-        <!-- <div class="container">
-            <div class="row align-items-start">
-                <div class="col">
-                    Одна из трех колонок
-                </div>
-                <div class="col-2">
-                    +
-                </div>
-                <div class="col-2">
-                    x
-                </div>
-            </div>
-        </div> -->
     </div>
-    <!-- <button type="button" class="btn btn-primary">Primary button</button> -->
-    <!-- {{ pages }} -->
-
 </template>
 
 <script>

@@ -32,14 +32,13 @@ class ProjectCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-        ->setEntityLabelInSingular('Проект')
-        ->setEntityLabelInPlural('Проекты')
-        ->setPageTitle('index', 'Проекты')
-        ->setPageTitle('new', 'Добавление проекта')
-        ->setPageTitle('edit', 'Изменить проект')
-        ;
+            ->setEntityLabelInSingular('Проект')
+            ->setEntityLabelInPlural('Проекты')
+            ->setPageTitle('index', 'Проекты')
+            ->setPageTitle('new', 'Добавление проекта')
+            ->setPageTitle('edit', 'Изменить проект');
     }
-    
+
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -52,7 +51,7 @@ class ProjectCrudController extends AbstractCrudController
             TextField::new('type')
                 ->setLabel('Тип')
                 ->setFormTypeOption('label', 'Тип'),
-            AssociationField::new('Teams')
+            AssociationField::new('teams')
                 ->setLabel('Команды')
                 ->setFormTypeOption('label', 'Команды в составе проекта')
                 ->setFormTypeOption('choice_label', 'name')
@@ -68,7 +67,7 @@ class ProjectCrudController extends AbstractCrudController
                 ->setFormTypeOptions([
                     'by_reference' => false,
                 ]),
-            AssociationField::new('storage')
+            AssociationField::new('storages')
                 ->setLabel('Репозитории')
                 ->setCustomOption('label', 'Репозиторий')
                 ->setFormTypeOption('label', 'Репозитории')
@@ -83,93 +82,33 @@ class ProjectCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-            ->update(Crud::PAGE_INDEX, Action::EDIT, function(Action $action) {
+            ->update(Crud::PAGE_INDEX, Action::EDIT, function (Action $action) {
                 return $action
                     ->setLabel('Изменить');
             })
-            ->update(Crud::PAGE_INDEX, Action::NEW, function(Action $action) {
+            ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
                 return $action
                     ->setLabel('Добавить');
             })
-            ->update(Crud::PAGE_INDEX, Action::DELETE, function(Action $action) {
+            ->update(Crud::PAGE_INDEX, Action::DELETE, function (Action $action) {
                 return $action
                     ->setLabel('Удалить');
             })
-            ->update(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE, function(Action $action) {
+            ->update(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE, function (Action $action) {
                 return $action
                     ->setLabel('Сохранить и продолжить редактирование');
             })
-            ->update(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN, function(Action $action) {
+            ->update(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN, function (Action $action) {
                 return $action
                     ->setLabel('Сохранить и вернуться на главную');
             })
-            ->update(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER, function(Action $action) {
+            ->update(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER, function (Action $action) {
                 return $action
                     ->setLabel('Сохранить и добавить еще');
             })
-            ->update(Crud::PAGE_NEW, Action::SAVE_AND_RETURN, function(Action $action) {
+            ->update(Crud::PAGE_NEW, Action::SAVE_AND_RETURN, function (Action $action) {
                 return $action
                     ->setLabel('Сохранить и вернуться на главную');
-            })
-        ;
+            });
     }
-
-    // public function save(AdminContext $context)
-    // {
-    //     $fild = $context->getEntity()->getInstance();
-        
-    //     dd($fild);
-
-    //     // add your logic here...
-    // }
-    
-    // public function createEditFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface
-    // {
-    //     $formBuilder = parent::createEditFormBuilder($entityDto, $formOptions, $context);
-
-    //     $this->addListener($formBuilder);
-
-    //     return $formBuilder;
-    // }
-
-    // protected function addListener(FormBuilderInterface $formBuilder): void
-    // {
-    //     $formBuilder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-
-    //         //dd($event->getData());
-    //         //dd($event->getData());
-
-    //         // /** @var Moderator $moderator */
-    //         // $moderator = $event->getData();
-
-    //         // if (!$this->isThisUser($moderator)) {
-    //         //     $event->getForm()->addError(new FormError(
-    //         //         $this->translator->trans('moderators.error.change_other_password', [], 'admin')
-    //         //     ));
-    //         //     return;
-    //         // }
-    //         // if ($moderator->getPassword()) {
-    //         //     $moderator->setPassword(
-    //         //         $this->passwordHasher->hashPassword(
-    //         //             $moderator,
-    //         //             $moderator->getPassword()
-    //         //         )
-    //         //     );
-    //         // }
-    //     });
-    // }
-
-    // // public static function getSubscribedEvents()
-    // // {
-    // //     return [
-    // //         BeforeEntityPersistedEvent::class => ['setBlogPostSlug'],
-    // //     ];
-    // // }
-
-    // public function setBlogPostSlug(BeforeEntityPersistedEvent $event)
-    // {
-    //     $entity = $event->getEntityInstance();
-    //     dd($entity);
-    // }
-    
 }

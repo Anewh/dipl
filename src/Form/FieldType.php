@@ -15,8 +15,7 @@ class FieldType extends AbstractType
             ->add('header')
             ->add('content')
             ->add('type')
-            ->add('project')
-        ;
+            ->add('project');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

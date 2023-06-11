@@ -21,10 +21,7 @@ class ProjectType extends AbstractType
             ])
             ->add('type', TextType::class, [
                 'label' => 'Тип',
-            ])
-            // ->add('Teams')
-            // ->add('users')
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

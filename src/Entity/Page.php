@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-use phpDocumentor\Reflection\Types\Nullable;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PageRepository::class)]
 class Page
@@ -21,34 +21,27 @@ class Page
 
     #[ORM\Column(type: Types::TEXT)]
     #[Groups(['pageShow', 'projectShow'])]
-    
-    private ?string $file = null;
+    private ?string $file = '';
 
     #[ORM\ManyToOne(inversedBy: 'pages')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['pageShow'])]
     private ?Project $project = null;
 
-    // #[ORM\Column(length: 255, nullable: true)]
-    // #[Groups(['pageShow', 'projectShow'])]
-    // private ?string $relation = null;
-
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'pages')]
     #[Groups(['pageShow', 'projectShow'])]
     private ?self $parent = null;
 
-
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
-    //#[Groups(['pageShow', 'projectShow'])]
     private Collection $pages;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255, maxMessage: 'Укажите корректное название')]
     #[Groups(['pageShow', 'projectShow'])]
     private ?string $header = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $lvl = null;
-
+    private ?int $level = null;
 
     public function __construct()
     {
@@ -89,21 +82,8 @@ class Page
         return $this;
     }
 
-    // public function getRelation(): ?string
-    // {
-    //     return $this->relation;
-    // }
-
-    // public function setRelation(string $relation): self
-    // {
-    //     $this->relation = $relation;
-
-    //     return $this;
-    // }
-
     public function getParent(): ?self
     {
-        //return $this->parent?$this->parent->getId(): -1;
         return $this->parent;
     }
 
@@ -132,18 +112,6 @@ class Page
         return $this;
     }
 
-    // public function removePage(self $page): self
-    // {
-    //     if ($this->pages->removeElement($page)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($page->getParent() === $this) {
-    //             $page->setParent(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
-
     public function getHeader(): ?string
     {
         return $this->header;
@@ -161,14 +129,14 @@ class Page
         return $this->getHeader();
     }
 
-    public function getLvl(): ?int
+    public function getLevel(): ?int
     {
-        return $this->lvl;
+        return $this->level;
     }
 
-    public function setLvl(?int $lvl): self
+    public function setLevel(?int $level): self
     {
-        $this->lvl = $lvl;
+        $this->level = $level;
 
         return $this;
     }

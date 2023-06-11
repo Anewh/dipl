@@ -16,19 +16,15 @@ class PageCrudController extends AbstractCrudController
         return Page::class;
     }
 
-    
     public function configureFields(string $pageName): iterable
     {
         return [
-            // IdField::new('id'),
             TextField::new('header'),
             NumberField::new('lvl'),
             TextEditorField::new('file'),
             AssociationField::new('project')
-            ->setFormTypeOption('choice_label', 'fullName')
-            ->setFormTypeOption('mapped', 'false')
-            
+                ->setFormTypeOption('choice_label', 'fullName')
+                ->setFormTypeOption('mapped', 'false')
         ];
     }
-    
 }

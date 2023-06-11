@@ -14,8 +14,7 @@ class TeamType extends AbstractType
         $builder
             ->add('name')
             ->add('projects')
-            ->add('users')
-        ;
+            ->add('users');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

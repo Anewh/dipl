@@ -1,10 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Project index
+{% block title %}Проекты
 {% endblock %}
 
 {% block body %}
-
 	<div class="container py-4">
 		<a class="btn btn-outline-success mb-3" href="{{ path('app_project_new') }}">
 			Добавить
@@ -23,20 +22,6 @@
 					</div>
 				</div>
 			{% endfor %}
-			{# {% for project in personal_projects %}
-				<div class="row justify-content-between mb-3">
-					<div class="col-md-6">
-						<a href="{{ path('app_project_show', {'id': project.id}) }}" class="list-group-item list-group-item-action py-3 lh-sm">
-							<div class="d-flex w-100 align-items-center justify-content-between">
-								<strong class="mb-1">{{ project.fullname }}</strong>
-								<small class="text-body-secondary">{{ project.type }}</small>
-							</div>
-							<div class="col-10 mb-1 small">{{ project.codeName }}</div>
-						</a>
-					</div>
-				</div>
-			{% endfor %} #}
 		</div>
 	</div>
-
 {% endblock %}

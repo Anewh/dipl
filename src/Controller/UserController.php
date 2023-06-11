@@ -5,15 +5,14 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
-
 
 #[Route('/user')]
-// #[IsGranted('ROLE_USER')]
+#[IsGranted('ROLE_USER')]
 class UserController extends AbstractController
 {
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
@@ -44,7 +43,6 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_profile_show', methods: ['GET'])]
-    // #[IsGranted('ROLE_USER')]
     public function show(User $user): Response
     {
         /** @var ?User $user */

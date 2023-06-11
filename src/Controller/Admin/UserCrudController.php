@@ -25,7 +25,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserCrudController extends AbstractCrudController
 {
-
     private UserPasswordHasherInterface $passwordEncoder;
 
     public function __construct(UserPasswordHasherInterface $passwordEncoder)
@@ -41,56 +40,48 @@ class UserCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-        ->setEntityLabelInSingular('Пользователь')
-        ->setEntityLabelInPlural('Пользователи')
-        ->setPageTitle('index', 'Пользователи')
-        ->setPageTitle('new', 'Добавление пользователя')
-        ->setPageTitle('edit', 'Изменить пользователя')
-        ;
+            ->setEntityLabelInSingular('Пользователь')
+            ->setEntityLabelInPlural('Пользователи')
+            ->setPageTitle('index', 'Пользователи')
+            ->setPageTitle('new', 'Добавление пользователя')
+            ->setPageTitle('edit', 'Изменить пользователя');
     }
 
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-            ->update(Crud::PAGE_INDEX, Action::EDIT, function(Action $action) {
+            ->update(Crud::PAGE_INDEX, Action::EDIT, function (Action $action) {
                 return $action
                     ->setLabel('Изменить');
             })
-            ->update(Crud::PAGE_INDEX, Action::NEW, function(Action $action) {
+            ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
                 return $action
                     ->setLabel('Добавить');
             })
-            ->update(Crud::PAGE_INDEX, Action::DELETE, function(Action $action) {
+            ->update(Crud::PAGE_INDEX, Action::DELETE, function (Action $action) {
                 return $action
                     ->setLabel('Удалить');
             })
-            ->update(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE, function(Action $action) {
+            ->update(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE, function (Action $action) {
                 return $action
                     ->setLabel('Сохранить и продолжить редактирование');
             })
-            ->update(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN, function(Action $action) {
+            ->update(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN, function (Action $action) {
                 return $action
                     ->setLabel('Сохранить и вернуться на главную');
             })
-            ->update(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER, function(Action $action) {
+            ->update(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER, function (Action $action) {
                 return $action
                     ->setLabel('Сохранить и добавить еще');
             })
-            ->update(Crud::PAGE_NEW, Action::SAVE_AND_RETURN, function(Action $action) {
+            ->update(Crud::PAGE_NEW, Action::SAVE_AND_RETURN, function (Action $action) {
                 return $action
                     ->setLabel('Сохранить и вернуться на главную');
-            })
-        ;
+            });
     }
-
-
 
     public function configureFields(string $pageName): iterable
     {
-        // $rolesLabels = ['Просмотр', 'Администрирование', 'Редактирование'];
-        // $roles = ['ROLE_OWNER', 'ROLE_ADMIN', 'ROLE_USER'];
-
-
         $rolesLabels = ['Просмотр', 'Администрирование', 'Редактирование'];
         $roles = ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_DEV'];
         return [
@@ -104,13 +95,13 @@ class UserCrudController extends AbstractCrudController
             TextField::new('position')->setLabel('Должность'),
             TextField::new('githubname')->setLabel('Github имя'),
             TextField::new('token')->setLabel('Github токен'),
-            
+
             ChoiceField::new('roles')
                 ->setLabel('Доступ к информации о проектах')
                 ->setChoices(array_combine($rolesLabels, $roles))
                 ->allowMultipleChoices()
                 ->renderAsBadges(),
-                
+
             FormField::addPanel('Change password')->setIcon('fa fa-key'),
             Field::new('password', 'New password')->onlyWhenCreating()->setRequired(true)
                 ->setFormType(RepeatedType::class)
@@ -156,13 +147,11 @@ class UserCrudController extends AbstractCrudController
         $formBuilder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($plainPassword) {
             /** @var User $user */
             $user = $event->getData();
-            
-            if($user->getPassword() == null) return;
+
+            if ($user->getPassword() == null) return;
             if ($user->getPassword() !== $plainPassword) {
                 $user->setPassword($this->passwordEncoder->hashPassword($user, $user->getPassword()));
             }
         });
     }
-
-
 }

@@ -75,10 +75,10 @@ class AppFixtures extends Fixture
             'githubName' => 'Anewh',
             'token' => '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'
         ]
-        
+
     ];
 
-    const STORAGES = [ 
+    const STORAGES = [
         [
             'author' => 'GrishaginEvgeny',
             'description' => ' ',
@@ -109,7 +109,7 @@ class AppFixtures extends Fixture
             'description' => 'habr clone',
             'link' => 'HabrXX'
         ],
-        
+
     ];
     const PROJECTS = [
         [
@@ -132,7 +132,7 @@ class AppFixtures extends Fixture
             'codeName' => 'Сервис для публикации новостей, аналитических статей, мыслей, связанных с информационными технологиями, бизнесом и интернетом',
             'type' => 'web'
         ],
-        
+
     ];
     const FIELDS = [
         // Поля для проекта Практика - интернет магазин 
@@ -279,7 +279,7 @@ class AppFixtures extends Fixture
             'linkName' => 'docs',
             'link' => 'https://docs.google.com/presentation/d/1PsihPRz3-Vv5XsyupponkgDZvWh_KnTICqyQbwtTXWU/edit#slide=id.p4'
         ]
-        
+
     ];
 
 
@@ -291,7 +291,7 @@ class AppFixtures extends Fixture
         $this->userPasswordHashed = $userPasswordHashed;
     }
 
-    
+
     public function load(ObjectManager $manager): void
     {
         // $product = new Product();
@@ -310,7 +310,7 @@ class AppFixtures extends Fixture
                 ->setToken($value['token']);
             $password = $this->userPasswordHashed->hashPassword($user, $value['password']);
             $user->setPassword($password);
-            array_push($users, $user);
+            $users[] = $user;
             //$manager->persist($user);
         }
 
@@ -329,7 +329,7 @@ class AppFixtures extends Fixture
                 ->setType($value['type'])
                 ->setLink($value['link'])
                 ->setLinkName($value['linkName']);
-            array_push($fields, $field);
+            $fields[] = $field;
             //$manager->persist($field);
         }
 
@@ -340,7 +340,7 @@ class AppFixtures extends Fixture
                 ->setFullName($value['fullName'])
                 ->setCodeName($value['codeName'])
                 ->setType($value['type']);
-                // ->addStorage($storage);
+            // ->addStorage($storage);
             // foreach ($fields as $field) {
             //     $project->addField($field);
             //     //$field->setProject($project);
@@ -353,7 +353,7 @@ class AppFixtures extends Fixture
             //     $project->addField($field);
             //     //$field->setProject($project);
             // }
-            array_push($projects, $project);
+            $projects[] = $project;
         }
 
         $team1 = (new Team())->addUser($users[2])->addUser($users[3])->addUser($users[4])->setName('Team 1');
@@ -373,7 +373,7 @@ class AppFixtures extends Fixture
                 ->setDescription($value['description'])
                 ->setLink($value['link'])
                 ->setAuthor($value['author']);
-            array_push($storages, $storage);
+            $storages[] = $storage;
         }
 
 
@@ -384,19 +384,19 @@ class AppFixtures extends Fixture
         $projects[2]->addStorage($storages[4]);
         $projects[3]->addStorage($storages[5]);
 
-        for($i = 0; $i < 4; $i++){
+        for ($i = 0; $i < 4; $i++) {
             $projects[0]->addField($fields[$i]);
         }
 
-        for($i = 4; $i < 10; $i++){
+        for ($i = 4; $i < 10; $i++) {
             $projects[1]->addField($fields[$i]);
         }
 
-        for($i = 10; $i < 16; $i++){
+        for ($i = 10; $i < 16; $i++) {
             $projects[2]->addField($fields[$i]);
         }
 
-        for($i = 16; $i < 20; $i++){
+        for ($i = 16; $i < 20; $i++) {
             $projects[3]->addField($fields[$i]);
         }
 
@@ -404,25 +404,25 @@ class AppFixtures extends Fixture
         $manager->persist($team1);
         $manager->persist($team2);
         //$manager->persist($storage);
-        
-        
-        foreach($projects as $elem){
+
+
+        foreach ($projects as $elem) {
             $manager->persist($elem);
         }
 
-        foreach($users as $elem){
+        foreach ($users as $elem) {
             $manager->persist($elem);
         }
 
-        foreach($fields as $elem){
+        foreach ($fields as $elem) {
             $manager->persist($elem);
         }
 
-        foreach($storages as $elem){
+        foreach ($storages as $elem) {
             $manager->persist($elem);
         }
 
-        foreach($fields as $elem){
+        foreach ($fields as $elem) {
             $manager->persist($elem);
         }
         // foreach (self::COURCES as $i => $value) {
@@ -440,17 +440,30 @@ class AppFixtures extends Fixture
         //         $manager->persist($lesson);
         //     }
         // }
-        $parentPage = (new Page())->setFile("- __[pica](https://nodeca.github.io/pica/demo/)__ - high quality and fast image resize in browser.")->setProject($projects[3])->setHeader('Example parent page');
-        $childPage1 =  (new Page())->setFile("> Blockquotes can also be nested...")->setParent($parentPage)->setProject($projects[3])->setHeader('Example child page 1');
-        $childPage2 =  (new Page())->setFile("![Minion](https://octodex.github.com/images/minion.png)")->setParent($parentPage)->setProject($projects[3])->setHeader('Example child page 2');
-        $childPage3 =  (new Page())->setFile("> Shortcuts (emoticons): :-) :-( 8-) ;)")->setParent($parentPage)->setProject($projects[3])->setHeader('Example child page 3');
+
+        $contextExample = ' Контактные лица
+        =====================
+Про все изменения в проекте информировать **@ewhii** *(telegram)*, и `в выходные тоже`.
+Другие контакты:
+* Руслан Смирнов **@examplename1** *(telegram)*
+* Иванов Иван **@examplename2** *(telegram)*
+* Владимир попов (PM) **@examplename3** *(telegram)*
         
+> Аналитику активности разрабочтиков можно посмотреть в разделе
+> "Активность"
+> изменения состава команды можно отследить в соответствующем разделе ';
+
+        $parentPage = (new Page())->setFile(" - __[какая-то ссылка для примера](https://nodeca.github.io/pica/demo/)__ - потому что писать документацию к проекту с нуля сложно слишком для одних только тестов. Нужен реальный рабочий проект, в таком случае, документация не будет публично доступной. ")->setProject($projects[3])->setHeader('Основная информация')->setLevel(1);
+        $childPage1 =  (new Page())->setFile("> Blockquotes can also be nested...")->setParent($parentPage)->setProject($projects[3])->setHeader('Категории пользователей')->setLevel(2);
+        $childPage2 =  (new Page())->setFile("![Minion](https://octodex.github.com/images/minion.png)")->setParent($parentPage)->setProject($projects[3])->setHeader('Основные бизнес-процессы')->setLevel(2);
+        $childPage3 =  (new Page())->setFile($contextExample)->setParent($parentPage)->setProject($projects[3])->setHeader('Контактные лица')->setLevel(2);
+
 
         $manager->persist($parentPage);
         $manager->persist($childPage1);
         $manager->persist($childPage2);
         $manager->persist($childPage3);
-        
+
 
         $manager->flush();
     }

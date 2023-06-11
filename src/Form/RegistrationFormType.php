@@ -21,10 +21,6 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'label' => 'Email',
-                'constraints' => [
-                    new NotBlank(message: 'Укажите email'),
-                    new Email(message: 'Укажите email в правильном формате'),
-                ],
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -50,17 +46,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('lastname', TextType::class, [
                 'label' => 'Фамилия',
-            ])
-            ->add('githubName', TextType::class, [
-                'label' => 'Github имя',
-            ])
-            ->add('position', TextType::class, [
-                'label' => 'Должность',
-                'constraints' => [
-                    new NotBlank(message: 'Укажите телефон'),
-                ],
-            ])
-            ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

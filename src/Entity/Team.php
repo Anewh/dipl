@@ -5,10 +5,12 @@ namespace App\Entity;
 use App\Repository\TeamRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TeamRepository::class)]
+#[UniqueEntity(fields: ['name'], message: 'Данное название команды уже использовано')]
 class Team
 {
     #[ORM\Id]
@@ -16,7 +18,7 @@ class Team
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'Teams')]
+    #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'teams')]
     /**
      * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="App\Entity\Project", cascade={"persist"})
@@ -29,6 +31,7 @@ class Team
     private Collection $users;
 
     #[ORM\Column(length: 255,  nullable: true)]
+    #[Assert\Length(max: 255, maxMessage: 'Укажите корректное название')]
     private ?string $name = null;
 
     public function __construct()
